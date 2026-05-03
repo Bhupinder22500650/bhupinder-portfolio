@@ -177,8 +177,8 @@ export default function Projects() {
           {loading
             ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
             : repos.map((repo, i) => (
-                <ProjectCard key={repo.id} repo={repo} index={i} />
-              ))}
+              <ProjectCard key={repo.id} repo={repo} index={i} />
+            ))}
         </div>
 
         {error && (

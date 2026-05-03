@@ -94,11 +94,10 @@ export default function About() {
                   <div className="relative group">
                     {/* Timeline dot */}
                     <div
-                      className={`absolute -left-[37px] top-1 w-4 h-4 rounded-full border-4 transition-all duration-300 group-hover:scale-125 ${
-                        item.current
+                      className={`absolute -left-[37px] top-1 w-4 h-4 rounded-full border-4 transition-all duration-300 group-hover:scale-125 ${item.current
                           ? 'bg-primary border-surface-container-low'
                           : 'bg-surface-variant border-surface-container-low'
-                      }`}
+                        }`}
                     />
                     {item.current && (
                       <div className="absolute -left-[41px] top-[-4px] w-[24px] h-[24px] rounded-full bg-primary opacity-20 animate-ping" />
