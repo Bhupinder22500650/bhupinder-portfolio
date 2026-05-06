@@ -33,7 +33,7 @@ function formatRepoName(name: string) {
 function ProjectCard({ repo, index }: { repo: GitHubRepo; index: number }) {
   const tags = repo.topics?.length ? repo.topics.slice(0, 3) : repo.language ? [repo.language] : [];
   const langColor = LANGUAGE_COLORS[repo.language || ''] || '#75d5e2';
-  const archiveUrl = `${repo.html_url}/archive/refs/heads/main.zip`;
+  const archiveUrl = `${repo.html_url}/archive/refs/heads/${repo.default_branch || 'main'}.zip`;
 
   return (
     <FadeUp delay={index * 0.09}>

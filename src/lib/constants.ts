@@ -2,6 +2,12 @@ export const AVAILABLE_FOR_WORK = true;
 
 export const GITHUB_USERNAME = 'Bhupinder22500650';
 
+export const FEATURED_REPOSITORY_NAMES = [
+  'My-Pay-tracker',
+  'car-dealership-project-website',
+  'Lost-and-Found-Campus-',
+] as const;
+
 export const PERSONAL_INFO = {
   name: 'Bhupinder Singh',
   nameShort: 'B. Singh',
@@ -70,51 +76,42 @@ export const EDUCATION = [
 export const STATIC_PROJECTS = [
   {
     id: 1,
-    name: 'car-online-sale-system',
+    name: 'My-Pay-tracker',
     description:
-      'Responsive full-stack web app for online car listings and seller management with complete CRUD functionality. Features a MySQL schema for listings, users, and feedback. BEM CSS architecture optimised for cross-browser compatibility.',
-    language: 'PHP',
-    html_url: `https://github.com/${GITHUB_USERNAME}`,
+      'Personal pay tracking application built to record income, monitor payments, and keep financial activity organised through a clean TypeScript interface.',
+    language: 'TypeScript',
+    html_url: `https://github.com/${GITHUB_USERNAME}/My-Pay-tracker`,
     homepage: null,
-    topics: ['PHP', 'MySQL', 'JavaScript'],
-    updated_at: '2026-03-01T00:00:00Z',
-    stargazers_count: 5,
+    topics: ['TypeScript', 'Finance', 'Tracking'],
+    updated_at: '2026-05-04T07:35:06Z',
+    stargazers_count: 0,
+    default_branch: 'main',
   },
   {
     id: 2,
-    name: 'coffee-bliss-mobile-app',
+    name: 'car-dealership-project-website',
     description:
-      'Cross-platform mobile ordering app with authentication, menu browsing, cart, checkout, and order history. Implements AsyncStorage for local data persistence and tested on both iOS and Android.',
-    language: 'JavaScript',
-    html_url: `https://github.com/${GITHUB_USERNAME}`,
-    homepage: null,
-    topics: ['React Native', 'Expo', 'AsyncStorage'],
-    updated_at: '2025-12-01T00:00:00Z',
-    stargazers_count: 7,
+      'Car dealership website for browsing vehicle listings, managing inventory content, and presenting dealership information with a PHP-based web stack.',
+    language: 'PHP',
+    html_url: `https://github.com/${GITHUB_USERNAME}/car-dealership-project-website`,
+    homepage: 'https://coss.infinityfree.me/',
+    topics: ['PHP', 'MySQL', 'Dealership'],
+    updated_at: '2026-04-16T03:35:29Z',
+    stargazers_count: 0,
+    default_branch: 'main',
   },
   {
     id: 3,
-    name: 'khci-mind-and-movement',
+    name: 'Lost-and-Found-Campus-',
     description:
-      'IT project planning simulation for a NZD 250,000 healthcare initiative. Included WBS, Gantt charts, Agile workflows in Jira, risk assessments, stakeholder communication plans, and full project documentation.',
-    language: 'HTML',
-    html_url: `https://github.com/${GITHUB_USERNAME}`,
-    homepage: null,
-    topics: ['Jira', 'MS Project', 'Agile'],
-    updated_at: '2025-10-01T00:00:00Z',
-    stargazers_count: 3,
-  },
-  {
-    id: 4,
-    name: 'portfolio-website',
-    description:
-      'Personal portfolio built with Next.js 15, Tailwind CSS v4, Framer Motion, and the Digital Curator design system. Features GitHub API integration, EmailJS contact form, and Vercel Analytics.',
+      'Campus lost-and-found platform designed to help students report, browse, and recover misplaced items through a focused TypeScript application.',
     language: 'TypeScript',
-    html_url: `https://github.com/${GITHUB_USERNAME}`,
+    html_url: `https://github.com/${GITHUB_USERNAME}/Lost-and-Found-Campus-`,
     homepage: null,
-    topics: ['Next.js', 'TypeScript', 'Tailwind'],
-    updated_at: '2026-04-01T00:00:00Z',
-    stargazers_count: 9,
+    topics: ['TypeScript', 'Campus', 'Web App'],
+    updated_at: '2026-05-04T23:48:53Z',
+    stargazers_count: 0,
+    default_branch: 'main',
   },
 ];
 

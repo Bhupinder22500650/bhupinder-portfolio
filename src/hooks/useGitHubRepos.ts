@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { GITHUB_USERNAME, STATIC_PROJECTS } from '@/lib/constants';
+import { FEATURED_REPOSITORY_NAMES, GITHUB_USERNAME, STATIC_PROJECTS } from '@/lib/constants';
 
 export interface GitHubRepo {
   id: number;
@@ -13,10 +13,28 @@ export interface GitHubRepo {
   topics: string[];
   updated_at: string;
   stargazers_count: number;
+  default_branch?: string;
 }
 
-const CACHE_KEY = 'gh_repos_cache';
+const CACHE_KEY = 'gh_featured_repos_cache_v2';
 const CACHE_TTL = 1000 * 60 * 30; // 30 minutes
+
+const staticProjectByName = new Map(STATIC_PROJECTS.map((project) => [project.name, project]));
+
+function orderFeaturedRepos(repos: GitHubRepo[]) {
+  return FEATURED_REPOSITORY_NAMES.map((name) => repos.find((repo) => repo.name === name))
+    .filter((repo): repo is GitHubRepo => Boolean(repo))
+    .map((repo) => {
+      const fallback = staticProjectByName.get(repo.name);
+
+      return {
+        ...repo,
+        description: repo.description || fallback?.description || null,
+        homepage: repo.homepage || fallback?.homepage || null,
+        topics: repo.topics?.length ? repo.topics : fallback?.topics || [],
+      };
+    });
+}
 
 export function useGitHubRepos() {
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
@@ -38,14 +56,14 @@ export function useGitHubRepos() {
         }
 
         const res = await fetch(
-          `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`,
+          `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`,
           { headers: { Accept: 'application/vnd.github+json' } }
         );
 
         if (!res.ok) throw new Error('GitHub API error');
 
         const data: GitHubRepo[] = await res.json();
-        const filtered = data.filter((r) => !r.name.startsWith('.')).slice(0, 6);
+        const filtered = orderFeaturedRepos(data);
 
         localStorage.setItem(CACHE_KEY, JSON.stringify({ data: filtered, timestamp: Date.now() }));
         setRepos(filtered.length > 0 ? filtered : STATIC_PROJECTS);

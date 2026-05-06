@@ -1,28 +1,51 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 
 export type Theme = 'dark' | 'light';
 
-export function useTheme() {
-  const [theme, setTheme] = useState<Theme>('dark');
+const THEME_STORAGE_KEY = 'theme';
+const THEME_CHANGE_EVENT = 'theme-change';
 
-  useEffect(() => {
-    const stored = localStorage.getItem('theme') as Theme | null;
-    if (stored) {
-      setTheme(stored);
-      document.documentElement.setAttribute('data-theme', stored);
-    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-      setTheme('light');
-      document.documentElement.setAttribute('data-theme', 'light');
-    }
-  }, []);
+function isTheme(value: string | null): value is Theme {
+  return value === 'dark' || value === 'light';
+}
+
+function getPreferredTheme(): Theme {
+  if (typeof window === 'undefined') return 'dark';
+
+  const stored = localStorage.getItem(THEME_STORAGE_KEY);
+  if (isTheme(stored)) return stored;
+
+  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+}
+
+function subscribe(onStoreChange: () => void) {
+  const handleChange = () => {
+    document.documentElement.setAttribute('data-theme', getPreferredTheme());
+    onStoreChange();
+  };
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+
+  window.addEventListener('storage', handleChange);
+  window.addEventListener(THEME_CHANGE_EVENT, handleChange);
+  mediaQuery.addEventListener('change', handleChange);
+
+  return () => {
+    window.removeEventListener('storage', handleChange);
+    window.removeEventListener(THEME_CHANGE_EVENT, handleChange);
+    mediaQuery.removeEventListener('change', handleChange);
+  };
+}
+
+export function useTheme() {
+  const theme = useSyncExternalStore(subscribe, getPreferredTheme, () => 'dark');
 
   const toggle = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-    localStorage.setItem('theme', next);
+    localStorage.setItem(THEME_STORAGE_KEY, next);
     document.documentElement.setAttribute('data-theme', next);
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
   };
 
   return { theme, toggle };
