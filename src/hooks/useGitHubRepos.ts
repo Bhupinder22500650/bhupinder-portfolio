@@ -64,9 +64,10 @@ export function useGitHubRepos() {
 
         const data: GitHubRepo[] = await res.json();
         const filtered = orderFeaturedRepos(data);
+        const finalRepos = filtered.length > 0 ? filtered : STATIC_PROJECTS;
 
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ data: filtered, timestamp: Date.now() }));
-        setRepos(filtered.length > 0 ? filtered : STATIC_PROJECTS);
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ data: finalRepos, timestamp: Date.now() }));
+        setRepos(finalRepos);
       } catch {
         setError(true);
         setRepos(STATIC_PROJECTS);

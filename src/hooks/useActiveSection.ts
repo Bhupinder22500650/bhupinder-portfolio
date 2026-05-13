@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react';
 
 export function useActiveSection(sectionIds: string[]) {
   const [activeSection, setActiveSection] = useState<string>(sectionIds[0]);
+  const sectionIdsJoined = sectionIds.join(',');
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
+    const ids = sectionIdsJoined.split(',');
 
-    sectionIds.forEach((id) => {
+    ids.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
 
@@ -25,7 +27,7 @@ export function useActiveSection(sectionIds: string[]) {
     });
 
     return () => observers.forEach((o) => o.disconnect());
-  }, [sectionIds]);
+  }, [sectionIdsJoined]);
 
   return activeSection;
 }
