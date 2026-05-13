@@ -144,7 +144,6 @@ export default function Contact() {
                     value={formData.from_name}
                     onChange={handleChange}
                     type="text"
-                    placeholder="John Doe"
                     required
                     className="input-animated"
                   />
@@ -161,7 +160,6 @@ export default function Contact() {
                     value={formData.from_email}
                     onChange={handleChange}
                     type="email"
-                    placeholder="john@company.com"
                     required
                     className="input-animated"
                   />
@@ -178,7 +176,6 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
-                    placeholder="Tell me about your project..."
                     required
                     className="input-animated resize-none"
                   />
