@@ -48,6 +48,14 @@ export const SKILLS = [
 
 export const EDUCATION = [
   {
+    title: 'Junior systems tester',
+    institution: 'SJS, Wellington, NZ',
+    description:
+      'As a Junior Systems Tester at Student Job Search, I test web application features to ensure they work correctly and provide a smooth user experience. My role includes checking functionality, user flows, UI/UX issues, performance problems, and identifying bugs across the platform. I report issues clearly to help the development team improve the system and make the application more reliable and user-friendly.',
+    current: true,
+    period: 'june 2026 - Present',
+  },
+  {
     title: 'IT Volunteer Support Technician',
     institution: 'Wellington E2E Centre — Lower Hutt, NZ',
     description:
