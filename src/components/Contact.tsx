@@ -99,11 +99,10 @@ export default function Contact() {
                 Get in Touch
               </span>
               <h2 className="text-4xl md:text-5xl font-extrabold text-on-surface tracking-tighter mb-6 leading-tight">
-                Let&apos;s talk about your next{' '}
-                <span className="text-primary">great team.</span>
+                Let’s connect
               </h2>
               <p className="text-on-surface-variant text-lg mb-12 leading-relaxed">
-                I&apos;m eager to bring my testing mindset, full-stack learning, and collaborative energy to a team in New Zealand. Send me a message and I&apos;ll get back to you quickly!
+                I am open to junior software testing, QA, IT support, internship, and junior developer opportunities in Wellington or remote across New Zealand. I am eager to bring my testing mindset, IT support experience, full-stack learning, and strong work ethic to a professional team.
               </p>
             </FadeUp>
 

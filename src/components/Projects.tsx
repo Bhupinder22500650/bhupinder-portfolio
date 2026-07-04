@@ -43,15 +43,10 @@ function ProjectCard({ repo, onOpenCaseStudy }: { repo: GitHubRepo; onOpenCaseSt
         style={{ background: `linear-gradient(90deg, ${langColor}, var(--color-primary))` }}
       />
 
-      {/* Thumbnail Placeholder/Image */}
+      {/* Thumbnail Image */}
       {repo.images && repo.images[0] ? (
         <div className="relative w-full h-40 bg-surface-variant/50 border-b border-glass-stroke overflow-hidden">
-          <div className="absolute inset-0 flex items-center justify-center text-on-surface-variant/50 z-0">
-            <ImageIcon size={48} />
-            <span className="ml-2 text-sm">Image Placeholder</span>
-          </div>
-          {/* The image is currently a placeholder, it will load if the file exists */}
-          <Image src={repo.images[0]} alt={repo.name} fill className="object-cover z-10" onError={(e) => (e.currentTarget.style.display = 'none')} />
+          <Image src={repo.images[0]} alt={repo.name} fill className="object-cover z-10" />
         </div>
       ) : (
         <div className="relative w-full h-40 bg-surface-variant flex items-center justify-center border-b border-glass-stroke text-on-surface-variant/50">

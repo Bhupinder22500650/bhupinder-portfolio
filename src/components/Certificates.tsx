@@ -96,7 +96,7 @@ export default function Certificates() {
                     <span className="text-xs text-on-surface-variant">{cert.date}</span>
                     <span className="flex items-center gap-1.5 text-xs font-bold text-primary group-hover:underline underline-offset-2 transition-all">
                       <ExternalLink size={12} />
-                      View
+                      View Certificate
                     </span>
                   </div>
                 </a>

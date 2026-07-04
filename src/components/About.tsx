@@ -73,7 +73,7 @@ export default function About() {
           <div>
             <FadeUp delay={0.05}>
               <h3 className="text-2xl font-bold text-on-surface mb-10 tracking-tight">
-                Journey &amp; Education
+                Experience &amp; Education
               </h3>
             </FadeUp>
 
@@ -115,7 +115,7 @@ export default function About() {
               <FadeUp delay={0.35}>
                 <div className="relative">
                   <div className="absolute -left-[37px] top-1 w-4 h-4 rounded-full border-2 border-dashed border-outline-variant opacity-40" />
-                  <p className="text-on-surface-variant text-sm italic opacity-50">What comes next…</p>
+                  <p className="text-on-surface-variant text-sm italic opacity-50">Practical Testing Skills</p>
                 </div>
               </FadeUp>
             </div>

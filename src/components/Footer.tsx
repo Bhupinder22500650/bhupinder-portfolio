@@ -17,15 +17,13 @@ export default function Footer() {
               B. <span className="text-primary">Singh</span>
             </div>
             <p className="text-xs text-on-surface-variant">
-              Full-Stack Developer &amp; IT Support — Wellington, NZ
+              Junior Software Tester | IT Support | Full-Stack IT Student — Wellington, NZ
             </p>
           </div>
 
           {/* Copyright */}
           <p className="text-xs text-on-surface-variant text-center leading-relaxed">
-            © {year} Bhupinder Singh. Built with{' '}
-            <Heart size={10} className="inline text-primary" fill="currentColor" /> and{' '}
-            <span className="text-primary font-medium">Editorial Precision.</span>
+            © {year} Bhupinder Singh. Built with Next.js, TypeScript, and care.
           </p>
 
           {/* Social + CV */}
