@@ -1,14 +1,8 @@
 import type { Metadata } from 'next';
-import { Manrope, Inter } from 'next/font/google';
+import { Manrope, Libre_Caslon_Text, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 import { PERSONAL_INFO } from '@/lib/constants';
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -16,34 +10,45 @@ const manrope = Manrope({
   display: 'swap',
 });
 
+const libreCaslon = Libre_Caslon_Text({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-libre-caslon',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
-  title: `${PERSONAL_INFO.name} | Full-Stack Developer & IT Support`,
-  description:
-    'Bhupinder Singh — Full-Stack Developer and IT Support engineer based in Wellington, NZ. Crafting high-performance digital experiences with Next.js, React, Python, and more.',
+  title: `${PERSONAL_INFO.name} | ${PERSONAL_INFO.title}`,
+  description: PERSONAL_INFO.tagline,
   keywords: [
     'Bhupinder Singh',
     'Full-Stack Developer',
     'IT Support',
+    'Software Tester',
     'Wellington NZ',
     'Next.js',
     'React',
     'TypeScript',
-    'Web Developer',
     'Portfolio',
   ],
   authors: [{ name: 'Bhupinder Singh', url: PERSONAL_INFO.github }],
   openGraph: {
-    title: `${PERSONAL_INFO.name} | Full-Stack Developer`,
-    description:
-      'Full-Stack Developer & IT Support based in Wellington, NZ. Crafting high-performance digital experiences.',
-    url: 'https://bhupindersingh.dev',
+    title: `${PERSONAL_INFO.name} | ${PERSONAL_INFO.title}`,
+    description: PERSONAL_INFO.tagline,
+    url: 'https://bhupindersingh-portfolio.vercel.app',
     siteName: 'Bhupinder Singh Portfolio',
     images: [
       {
         url: PERSONAL_INFO.ogImage,
         width: 1200,
         height: 630,
-        alt: 'Bhupinder Singh — Full-Stack Developer',
+        alt: 'Bhupinder Singh Portfolio',
       },
     ],
     type: 'website',
@@ -51,12 +56,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${PERSONAL_INFO.name} | Full-Stack Developer`,
-    description: 'Full-Stack Developer & IT Support based in Wellington, NZ.',
+    title: `${PERSONAL_INFO.name} | ${PERSONAL_INFO.title}`,
+    description: PERSONAL_INFO.tagline,
     images: [PERSONAL_INFO.ogImage],
   },
   robots: { index: true, follow: true },
-  metadataBase: new URL('https://bhupindersingh.dev'),
+  metadataBase: new URL('https://bhupindersingh-portfolio.vercel.app'),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -80,7 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`${inter.variable} ${manrope.variable}`}>
+      <body className={`${manrope.variable} ${libreCaslon.variable} ${jetbrainsMono.variable}`}>
         {children}
         <Analytics />
       </body>

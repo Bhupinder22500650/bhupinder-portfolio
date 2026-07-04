@@ -14,6 +14,14 @@ export interface GitHubRepo {
   updated_at: string;
   stargazers_count: number;
   default_branch?: string;
+  problem?: string;
+  solution?: string;
+  techStack?: string[];
+  role?: string;
+  features?: string[];
+  testing?: string[];
+  images?: string[];
+  isMobileApp?: boolean;
 }
 
 const CACHE_KEY = 'gh_featured_repos_cache_v2';
@@ -32,6 +40,14 @@ function orderFeaturedRepos(repos: GitHubRepo[]) {
         description: repo.description || fallback?.description || null,
         homepage: repo.homepage || fallback?.homepage || null,
         topics: repo.topics?.length ? repo.topics : fallback?.topics || [],
+        problem: fallback?.problem,
+        solution: fallback?.solution,
+        techStack: fallback?.techStack,
+        role: fallback?.role,
+        features: fallback?.features,
+        testing: fallback?.testing,
+        images: fallback?.images,
+        isMobileApp: fallback?.isMobileApp,
       };
     });
 }

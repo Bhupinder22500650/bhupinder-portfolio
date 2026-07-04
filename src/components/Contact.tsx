@@ -88,7 +88,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-32 bg-surface-container-low">
+    <section id="contact" className="py-32 bg-surface-dim">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
 
@@ -99,11 +99,11 @@ export default function Contact() {
                 Get in Touch
               </span>
               <h2 className="text-4xl md:text-5xl font-extrabold text-on-surface tracking-tighter mb-6 leading-tight">
-                Let&apos;s build something{' '}
-                <span className="text-primary">extraordinary.</span>
+                Let&apos;s talk about your next{' '}
+                <span className="text-primary">great team.</span>
               </h2>
               <p className="text-on-surface-variant text-lg mb-12 leading-relaxed">
-                Whether you&apos;re looking to hire for a role or collaborate on a project, my inbox is always open.
+                I&apos;m eager to bring my testing mindset, full-stack learning, and collaborative energy to a team in New Zealand. Send me a message and I&apos;ll get back to you quickly!
               </p>
             </FadeUp>
 
@@ -131,7 +131,7 @@ export default function Contact() {
 
           {/* Right — Contact Form */}
           <FadeUp delay={0.15}>
-            <div className="bg-surface p-8 md:p-10 rounded-2xl shadow-[0px_32px_64px_rgba(0,0,0,0.2)]">
+            <div className="bg-surface/50 backdrop-blur-md border border-glass-stroke p-8 md:p-10 rounded-2xl shadow-2xl">
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-7" noValidate>
                 {/* Name */}
                 <div>
@@ -208,7 +208,7 @@ export default function Contact() {
                   id="contact-submit"
                   type="submit"
                   disabled={state === 'sending'}
-                  className="w-full py-4 gradient-primary text-on-primary font-bold rounded-md hover:opacity-90 transition-all active:scale-95 shadow-lg shadow-black/20 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full py-4 bg-primary text-on-primary font-bold rounded-full hover:opacity-90 transition-opacity active:scale-95 shadow-sm flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
                   {state === 'sending' ? (
                     <>

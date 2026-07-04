@@ -21,7 +21,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 export default function About() {
   return (
-    <section id="about" className="py-32 bg-surface-container-low">
+    <section id="about" className="py-32 bg-surface-dim">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
 
@@ -32,8 +32,8 @@ export default function About() {
                 Who I Am
               </span>
               <h2 className="text-4xl md:text-5xl font-extrabold text-on-surface tracking-tighter mb-8">
-                The Digital<br />
-                <span className="text-primary">Curator</span>
+                About<br />
+                <span className="text-primary">Me</span>
               </h2>
             </FadeUp>
 
@@ -47,28 +47,24 @@ export default function About() {
 
             {/* Skills Chips */}
             <FadeUp delay={0.2}>
-              <div className="mt-12">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-primary mb-5">
-                  Technical Mastery
-                </h3>
-                <div className="flex flex-wrap gap-2.5">
-                  {SKILLS.map((skill) => (
-                    <span
-                      key={skill.label}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-surface-variant text-on-surface-variant text-sm font-medium hover:bg-surface-container-high hover:text-on-surface transition-all duration-200 cursor-default"
-                    >
-                      {skill.highProficiency && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                      )}
-                      {skill.label}
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-4 text-xs text-on-surface-variant opacity-60">
-                  <span className="inline-flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary inline-block" /> = High Proficiency
-                  </span>
-                </p>
+              <div className="mt-12 space-y-6">
+                {SKILLS.map((skillGroup) => (
+                  <div key={skillGroup.category}>
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-primary mb-3">
+                      {skillGroup.category}
+                    </h3>
+                    <div className="flex flex-wrap gap-2.5">
+                      {skillGroup.items.map((item) => (
+                        <span
+                          key={item}
+                          className="font-mono inline-flex items-center px-4 py-2 rounded-full border border-glass-stroke bg-surface/50 text-on-surface-variant text-xs tracking-wider font-medium hover:bg-surface-bright hover:text-primary hover:border-primary/50 transition-all duration-300 cursor-default"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </FadeUp>
           </div>

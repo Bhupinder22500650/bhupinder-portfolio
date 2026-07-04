@@ -2,48 +2,57 @@
 
 @layer base {
   :root {
-    --color-surface: #131313;
-    --color-surface-dim: #131313;
-    --color-surface-bright: #393939;
+    /* Stitch "Digital Curator" Theme */
+    --color-surface: #141313;
+    --color-surface-dim: #141313;
+    --color-surface-bright: #3a3939;
     --color-surface-container-lowest: #0e0e0e;
     --color-surface-container-low: #1c1b1b;
     --color-surface-container: #201f1f;
     --color-surface-container-high: #2a2a2a;
-    --color-surface-container-highest: #353534;
-    --color-surface-variant: #353534;
+    --color-surface-container-highest: #353435;
+    --color-surface-variant: #353435;
     --color-on-surface: #e5e2e1;
-    --color-on-surface-variant: #bec8c9;
-    --color-primary: #75d5e2;
-    --color-primary-container: #006069;
+    --color-on-surface-variant: #c5c6ca;
+    --color-primary: #75D5E2; /* Mapped to Electric Blue for primary CTA */
+    --color-primary-container: #1a1c1e;
     --color-on-primary: #00363c;
-    --color-secondary: #bbc8d0;
-    --color-outline: #889393;
-    --color-outline-variant: #3f4949;
-    --color-background: #131313;
+    --color-secondary: #c6c6c9;
+    --color-outline: #8f9194;
+    --color-outline-variant: #44474a;
+    --color-background: #141313;
     --color-on-background: #e5e2e1;
+    
+    /* Digital Curator Accents */
+    --color-electric-blue: #75D5E2;
+    --color-cyber-lime: #D4FF33;
+    --color-slate-gray: #343A40;
+    --color-off-white: #F8F9FA;
+    --color-glass-stroke: rgba(255, 255, 255, 0.1);
   }
 
-  /* Light mode overrides */
+  /* Light mode overrides - Off-white theme */
   [data-theme="light"] {
-    --color-surface: #f4f4f4;
-    --color-surface-dim: #e8e8e8;
+    --color-surface: #F8F9FA;
+    --color-surface-dim: #f0f0f0;
     --color-surface-bright: #ffffff;
     --color-surface-container-lowest: #ffffff;
-    --color-surface-container-low: #eaeaea;
-    --color-surface-container: #e0e0e0;
-    --color-surface-container-high: #d6d6d6;
-    --color-surface-container-highest: #cccccc;
-    --color-surface-variant: #dce4e6;
-    --color-on-surface: #1a1a1a;
-    --color-on-surface-variant: #3f4949;
-    --color-primary: #006069;
-    --color-primary-container: #a8ecf6;
-    --color-on-primary: #ffffff;
-    --color-secondary: #4a6270;
-    --color-outline: #6f7d7e;
-    --color-outline-variant: #9ab5b8;
-    --color-background: #f4f4f4;
-    --color-on-background: #1a1a1a;
+    --color-surface-container-low: #f4f4f5;
+    --color-surface-container: #e4e4e7;
+    --color-surface-container-high: #d4d4d8;
+    --color-surface-container-highest: #a1a1aa;
+    --color-surface-variant: #f4f4f5;
+    --color-on-surface: #141313;
+    --color-on-surface-variant: #343A40;
+    --color-primary: #75D5E2;
+    --color-primary-container: #00818d;
+    --color-on-primary: #001f23;
+    --color-secondary: #5d5e61;
+    --color-outline: #8f9194;
+    --color-outline-variant: #e4e4e7;
+    --color-background: #F8F9FA;
+    --color-on-background: #141313;
+    --color-glass-stroke: rgba(0, 0, 0, 0.1);
   }
 
   html {
@@ -53,13 +62,17 @@
   body {
     background-color: var(--color-surface);
     color: var(--color-on-surface);
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-manrope), sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Manrope', sans-serif;
+    font-family: var(--font-libre-caslon), serif;
+  }
+
+  .font-mono {
+    font-family: var(--font-jetbrains-mono), monospace;
   }
 
   * {
@@ -99,13 +112,14 @@
   }
 
   .glass-nav {
-    background: rgba(19, 19, 19, 0.7);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    background: rgba(20, 19, 19, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-glass-stroke);
   }
 
   [data-theme="light"] .glass-nav {
-    background: rgba(244, 244, 244, 0.7);
+    background: rgba(248, 249, 250, 0.1);
   }
 
   /* Fade-up animation for scroll reveal */

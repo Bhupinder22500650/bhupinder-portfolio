@@ -95,7 +95,7 @@ export default function Navbar() {
             <a
               href={PERSONAL_INFO.cvPath}
               download="Bhupinder_Singh_CV.pdf"
-              className="hidden md:flex items-center gap-2 px-5 py-2 rounded-md gradient-primary text-on-primary text-sm font-bold hover:opacity-90 transition-all active:scale-95"
+              className="hidden md:flex items-center gap-2 px-5 py-2 rounded-full bg-primary text-on-primary text-sm font-bold hover:opacity-90 transition-opacity active:scale-95 shadow-sm"
             >
               <Download size={14} />
               Download CV
@@ -122,7 +122,7 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 28, stiffness: 250 }}
-            className="fixed top-0 right-0 bottom-0 w-[75vw] max-w-xs z-40 bg-surface-container-low flex flex-col pt-24 px-8 gap-6"
+            className="fixed top-0 right-0 bottom-0 w-[75vw] max-w-xs z-40 bg-surface flex flex-col pt-24 px-8 gap-6 shadow-2xl"
           >
             {NAV_LINKS.map((link, i) => (
               <motion.button
@@ -144,7 +144,7 @@ export default function Navbar() {
               transition={{ delay: 0.3 }}
               href={PERSONAL_INFO.cvPath}
               download="Bhupinder_Singh_CV.pdf"
-              className="mt-4 flex items-center gap-2 px-5 py-3 rounded-md gradient-primary text-on-primary text-base font-bold justify-center active:scale-95"
+              className="mt-4 flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-on-primary text-base font-bold justify-center active:scale-95 hover:opacity-90 transition-opacity"
             >
               <Download size={16} />
               Download CV

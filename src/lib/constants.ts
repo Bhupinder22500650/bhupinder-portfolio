@@ -11,7 +11,7 @@ export const FEATURED_REPOSITORY_NAMES = [
 export const PERSONAL_INFO = {
   name: 'Bhupinder Singh',
   nameShort: 'B. Singh',
-  title: 'Full-Stack Developer & IT Support',
+  title: 'Junior Software Tester | IT Support | Full-Stack IT Student',
   location: 'Wellington, NZ',
   email: 'bhupindersinghrakhra99@gmail.com',
   linkedin: 'https://www.linkedin.com/in/bhupinder-singh-530856251/',
@@ -20,46 +20,72 @@ export const PERSONAL_INFO = {
   profilePhoto: '/profile.jpg',
   ogImage: '/og-image.jpg',
   tagline:
-    'Final-year IT student building full-stack web and mobile apps with JavaScript, React, Node.js, and SQL. Passionate about clean, scalable code and real-world software solutions.',
+    'Final-year IT student based in Wellington, New Zealand, with hands-on experience in software testing, IT support, and full-stack web/mobile projects. I build practical applications using React, React Native, Node.js, TypeScript, SQL, and Supabase.',
 };
 
 export const ABOUT_TEXT = [
-  "Final-year Bachelor of Information Technology student with hands-on experience building full-stack web and mobile applications using JavaScript, React, Node.js, and SQL. Passionate about writing clean, scalable code and delivering real-world software solutions.",
-  "Currently volunteering as an IT Support Technician while completing coursework in data analytics and digital ethics. I thrive at the intersection of software engineering and meaningful technology — with a strong interest in healthtech, cloud engineering, and continuous professional development.",
+  'I am a final-year Bachelor of Information Technology student based in Wellington, New Zealand. My main focus is software testing, IT support, and building practical full-stack applications.',
+  'I have hands-on experience testing real web application features at Student Job Search, where I check functionality, user flows, UI/UX issues, performance problems, and report bugs clearly. I also have IT support experience helping users with hardware, software, network, and system issues.',
+  'My goal is to grow into a junior software tester, QA analyst, IT support technician, or junior developer role where I can contribute, learn quickly, and build reliable technology.',
 ];
 
 export const SKILLS = [
-  { label: 'JavaScript', highProficiency: true },
-  { label: 'React.js', highProficiency: true },
-  { label: 'React Native', highProficiency: true },
-  { label: 'Node.js', highProficiency: true },
-  { label: 'Express.js', highProficiency: true },
-  { label: 'SQL & MySQL', highProficiency: true },
-  { label: 'HTML & CSS', highProficiency: false },
-  { label: 'PHP', highProficiency: false },
-  { label: 'Git & GitHub', highProficiency: false },
-  { label: 'AWS (S3, EC2)', highProficiency: false },
-  { label: 'Power BI', highProficiency: false },
-  { label: 'Agile / Scrum', highProficiency: false },
-  { label: 'RESTful APIs', highProficiency: false },
-  { label: 'IT Support', highProficiency: false },
-  { label: 'Linux (Ubuntu)', highProficiency: false },
+  {
+    category: 'Strong',
+    items: [
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'React',
+      'Git',
+      'GitHub',
+      'Manual Testing Basics',
+      'Bug Reporting',
+    ],
+  },
+  {
+    category: 'Working Knowledge',
+    items: [
+      'TypeScript',
+      'React Native',
+      'Expo',
+      'Node.js',
+      'Express.js',
+      'SQL',
+      'MySQL',
+      'Supabase',
+      'REST APIs',
+      'Zod',
+      'Zustand',
+    ],
+  },
+  {
+    category: 'Learning',
+    items: [
+      'AWS',
+      'CI/CD',
+      'Power BI',
+      'Linux',
+      'Cybersecurity Fundamentals',
+      'Automated Testing',
+    ],
+  },
 ];
 
 export const EDUCATION = [
   {
-    title: 'Junior systems tester',
-    institution: 'SJS, Wellington, NZ',
+    title: 'Junior Systems Tester',
+    institution: 'Student Job Search — Wellington, NZ',
     description:
-      'As a Junior Systems Tester at Student Job Search, I test web application features to ensure they work correctly and provide a smooth user experience. My role includes checking functionality, user flows, UI/UX issues, performance problems, and identifying bugs across the platform. I report issues clearly to help the development team improve the system and make the application more reliable and user-friendly.',
+      'Testing Student Job Search web application features by checking functionality, user flows, UI/UX issues, form validation, performance problems, and reporting bugs clearly for the development team.',
     current: true,
-    period: 'june 2026 - Present',
+    period: 'Jun 2026 – Present',
   },
   {
     title: 'IT Volunteer Support Technician',
     institution: 'Wellington E2E Centre — Lower Hutt, NZ',
     description:
-      'Provide IT support and technical assistance to staff and educators at a community learning centre. Manage hardware/software systems, diagnose network and peripheral issues, and advise on best practices for system security and reliability.',
+      'Provided basic IT support by helping users with hardware, software, system access, network issues, and general troubleshooting.',
     current: true,
     period: 'Apr 2026 – Present',
   },
@@ -86,7 +112,7 @@ export const STATIC_PROJECTS = [
     id: 1,
     name: 'My-Pay-tracker',
     description:
-      'Personal pay tracking application built to record income, monitor payments, and keep financial activity organised through a clean TypeScript interface.',
+      'My Pay Tracker is a React Native mobile app for New Zealand shift workers to log work hours, manage multiple employers, preview gross/net pay, calculate PAYE tax, ACC levy, and 8% holiday pay. Built with Expo, TypeScript, Supabase, Zustand, TanStack Query, React Hook Form, and Zod. Includes unit tests for the tax engine and a cloud-sync architecture.',
     language: 'TypeScript',
     html_url: `https://github.com/${GITHUB_USERNAME}/My-Pay-tracker`,
     homepage: null,
@@ -94,6 +120,14 @@ export const STATIC_PROJECTS = [
     updated_at: '2026-05-04T07:35:06Z',
     stargazers_count: 0,
     default_branch: 'main',
+    problem: 'Many New Zealand shift workers do not know their estimated pay before payday, especially when working different hours, jobs, tax codes, or casual shifts.',
+    solution: 'Built a mobile app that allows users to track shifts, estimate gross and net pay, manage multiple employers, and calculate PAYE tax, ACC levy, and holiday pay.',
+    techStack: ['React Native', 'Expo', 'TypeScript', 'Supabase', 'Zustand', 'TanStack Query', 'React Hook Form', 'Zod', 'Jest', 'NZ PAYE tax calculation logic'],
+    role: 'Designed and developed the mobile app, implemented the frontend, backend integration, data validation, tax calculation logic, and testing for the core pay calculation engine.',
+    features: ['User authentication', 'Shift logging', 'Multiple employer support', 'Gross pay calculation', 'Net pay preview', 'PAYE tax calculation', 'ACC levy calculation', '8% holiday pay calculation', 'Dashboard analytics', 'Cloud sync', 'Offline-friendly state management', 'Tax engine unit tests'],
+    testing: ['Unit tests for tax calculation engine', 'Manual testing of shift entry', 'Form validation testing', 'Authentication flow testing', 'Edge case testing for pay calculations'],
+    images: ['/projects/my-pay-tracker.png'],
+    isMobileApp: true,
   },
   {
     id: 2,
@@ -107,6 +141,14 @@ export const STATIC_PROJECTS = [
     updated_at: '2026-04-16T03:35:29Z',
     stargazers_count: 0,
     default_branch: 'main',
+    problem: 'Local dealerships needed an easy way to manage vehicle inventory and display cars online to potential customers.',
+    solution: 'Developed a custom CMS and public-facing website using PHP and MySQL to manage and display car listings efficiently.',
+    techStack: ['PHP', 'MySQL', 'HTML', 'CSS', 'JavaScript'],
+    role: 'Full-stack developer responsible for database design, backend logic, and frontend implementation.',
+    features: ['Vehicle browsing', 'Admin dashboard', 'Inventory management', 'Search and filter options'],
+    testing: ['Manual functional testing', 'Form submission testing', 'Database query verification', 'Responsive layout testing'],
+    images: ['/projects/car-dealership.png'],
+    isMobileApp: false,
   },
   {
     id: 3,
@@ -120,6 +162,14 @@ export const STATIC_PROJECTS = [
     updated_at: '2026-05-04T23:48:53Z',
     stargazers_count: 0,
     default_branch: 'main',
+    problem: 'Students frequently lose items on campus and lack a centralized platform to report or search for found items.',
+    solution: 'Built a web platform allowing users to post lost items, search found items, and contact finders.',
+    techStack: ['TypeScript', 'React', 'Node.js', 'Express', 'SQL'],
+    role: 'Frontend and backend development, focusing on user flow and secure item reporting.',
+    features: ['Report lost item', 'Browse found items', 'Search by category', 'Secure contact system'],
+    testing: ['End-to-end user flow testing', 'Form validation', 'Search filtering testing', 'UI/UX usability testing'],
+    images: ['/projects/lost-and-found.png'],
+    isMobileApp: false,
   },
 ];
 
@@ -131,15 +181,6 @@ export const EMAILJS_CONFIG = {
 
 export const CERTIFICATES = [
   {
-    id: 1,
-    name: 'Full-Stack Web Developer',
-    issuer: 'Online Certification',
-    date: 'Dec 2023',
-    filePath: '/certificates/fullstack-web-developer.pdf',
-    category: 'Development',
-    isPdf: true,
-  },
-  {
     id: 2,
     name: 'Computer Networking (CCNA)',
     issuer: 'Cisco',
@@ -147,6 +188,24 @@ export const CERTIFICATES = [
     filePath: '/certificates/ccna.jpg',
     category: 'Networking',
     isPdf: false,
+  },
+  {
+    id: 5,
+    name: 'Hardware & Operating Systems',
+    issuer: 'IBM / Coursera',
+    date: 'Nov 2023',
+    filePath: '/certificates/hardware-os.pdf',
+    category: 'IT Support',
+    isPdf: true,
+  },
+  {
+    id: 1,
+    name: 'Full-Stack Web Developer',
+    issuer: 'Online Certification',
+    date: 'Dec 2023',
+    filePath: '/certificates/fullstack-web-developer.pdf',
+    category: 'Development',
+    isPdf: true,
   },
   {
     id: 3,
@@ -164,24 +223,6 @@ export const CERTIFICATES = [
     date: 'Dec 2023',
     filePath: '/certificates/devops.pdf',
     category: 'DevOps',
-    isPdf: true,
-  },
-  {
-    id: 5,
-    name: 'Hardware & Operating Systems',
-    issuer: 'IBM / Coursera',
-    date: 'Nov 2023',
-    filePath: '/certificates/hardware-os.pdf',
-    category: 'IT Support',
-    isPdf: true,
-  },
-  {
-    id: 6,
-    name: 'Learning C++',
-    issuer: 'Online Certification',
-    date: 'Jul 2023',
-    filePath: '/certificates/learning-cpp.pdf',
-    category: 'Development',
     isPdf: true,
   },
 ];

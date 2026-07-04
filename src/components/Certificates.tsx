@@ -1,10 +1,9 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { Award, Download, ExternalLink, X, FileText } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Award, ExternalLink } from 'lucide-react';
 import { CERTIFICATES } from '@/lib/constants';
-import Image from 'next/image';
 
 function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null);
@@ -15,6 +14,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      className="h-full"
     >
       {children}
     </motion.div>
@@ -29,95 +29,9 @@ const CATEGORY_COLORS: Record<string, string> = {
   'IT Support': '#f87171',
 };
 
-type Certificate = typeof CERTIFICATES[number];
-
-function CertModal({ cert, onClose }: { cert: Certificate; onClose: () => void }) {
-  return (
-    <AnimatePresence>
-      <motion.div
-        key="backdrop"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
-        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
-      >
-        <motion.div
-          key="modal"
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9 }}
-          transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-          onClick={(e) => e.stopPropagation()}
-          className="bg-surface-container-low rounded-2xl overflow-hidden max-w-2xl w-full shadow-2xl"
-        >
-          {/* Modal Header */}
-          <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/20">
-            <div>
-              <h3 className="text-lg font-bold text-on-surface">{cert.name}</h3>
-              <p className="text-sm text-primary">{cert.issuer} · {cert.date}</p>
-            </div>
-            <button
-              onClick={onClose}
-              className="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all"
-            >
-              <X size={16} />
-            </button>
-          </div>
-
-          {/* Modal Preview */}
-          <div className="p-6">
-            {cert.isPdf ? (
-              <div className="bg-surface rounded-xl p-10 flex flex-col items-center gap-6 text-center">
-                <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center">
-                  <FileText size={28} className="text-on-primary" />
-                </div>
-                <div>
-                  <p className="text-on-surface font-bold text-lg mb-1">{cert.name}</p>
-                  <p className="text-on-surface-variant text-sm">PDF Certificate — {cert.issuer}</p>
-                </div>
-                <div className="flex gap-3">
-                  <a
-                    href={cert.filePath}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-5 py-2.5 gradient-primary text-on-primary rounded-md font-bold text-sm hover:opacity-90 transition-all active:scale-95"
-                  >
-                    <ExternalLink size={14} />
-                    View PDF
-                  </a>
-                  <a
-                    href={cert.filePath}
-                    download
-                    className="flex items-center gap-2 px-5 py-2.5 bg-surface-variant text-on-surface-variant rounded-md font-bold text-sm hover:bg-surface-container-high hover:text-on-surface transition-all active:scale-95"
-                  >
-                    <Download size={14} />
-                    Download
-                  </a>
-                </div>
-              </div>
-            ) : (
-              <div className="relative w-full rounded-xl overflow-hidden bg-surface" style={{ minHeight: '320px' }}>
-                <Image
-                  src={cert.filePath}
-                  alt={cert.name}
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            )}
-          </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
-}
-
 export default function Certificates() {
-  const [selected, setSelected] = useState<Certificate | null>(null);
-
   return (
-    <section id="certificates" className="py-32 bg-surface-container-low">
+    <section id="certificates" className="py-32 bg-surface-dim">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
 
         {/* Header */}
@@ -141,9 +55,11 @@ export default function Certificates() {
             const accentColor = CATEGORY_COLORS[cert.category] || '#75d5e2';
             return (
               <FadeUp key={cert.id} delay={i * 0.08}>
-                <div
-                  onClick={() => setSelected(cert)}
-                  className="group relative bg-surface rounded-xl p-7 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:bg-surface-container-high shadow-[0px_16px_40px_rgba(0,0,0,0.15)] hover:shadow-[0px_24px_60px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col gap-4"
+                <a
+                  href={cert.filePath}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block group relative bg-surface rounded-lg p-7 transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2 hover:bg-surface-bright hover:shadow-2xl overflow-hidden flex flex-col gap-4 h-full border border-glass-stroke"
                 >
                   {/* Accent line */}
                   <div
@@ -160,7 +76,7 @@ export default function Certificates() {
                       <Award size={20} style={{ color: accentColor }} />
                     </div>
                     <span
-                      className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded"
+                      className="font-mono text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded"
                       style={{ backgroundColor: `${accentColor}15`, color: accentColor }}
                     >
                       {cert.category}
@@ -176,36 +92,19 @@ export default function Certificates() {
                   </div>
 
                   {/* Footer */}
-                  <div className="flex items-center justify-between pt-2 border-t border-outline-variant/15">
+                  <div className="flex items-center justify-between pt-4 border-t border-outline-variant/15 mt-2">
                     <span className="text-xs text-on-surface-variant">{cert.date}</span>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setSelected(cert); }}
-                        className="flex items-center gap-1.5 text-xs font-bold text-primary hover:underline underline-offset-2"
-                      >
-                        <ExternalLink size={12} />
-                        View
-                      </button>
-                      <a
-                        href={cert.filePath}
-                        download
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex items-center gap-1.5 text-xs font-bold text-on-surface-variant hover:text-on-surface transition-colors"
-                      >
-                        <Download size={12} />
-                        Save
-                      </a>
-                    </div>
+                    <span className="flex items-center gap-1.5 text-xs font-bold text-primary group-hover:underline underline-offset-2 transition-all">
+                      <ExternalLink size={12} />
+                      View
+                    </span>
                   </div>
-                </div>
+                </a>
               </FadeUp>
             );
           })}
         </div>
       </div>
-
-      {/* Modal */}
-      {selected && <CertModal cert={selected} onClose={() => setSelected(null)} />}
     </section>
   );
 }

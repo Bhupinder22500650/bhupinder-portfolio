@@ -19,12 +19,7 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex items-center pt-24 pb-12 px-6 md:px-10 max-w-7xl mx-auto overflow-hidden"
     >
-      {/* Background ambient glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-5"
-        style={{ background: 'radial-gradient(circle, #75d5e2 0%, transparent 70%)' }}
-      />
+      {/* Ambient background removed for cleaner look */}
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-center w-full">
         {/* Text block */}
@@ -35,10 +30,10 @@ export default function Hero() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-container-high mb-8"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-outline-variant/50 mb-8"
             >
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse-dot" />
-              <span className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+              <span className="w-2 h-2 rounded-full bg-[var(--color-cyber-lime)]" />
+              <span className="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">
                 Available for work
               </span>
             </motion.div>
@@ -61,11 +56,10 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg md:text-xl text-on-surface-variant mb-10 max-w-lg leading-relaxed font-light"
+            className="text-lg md:text-xl text-on-surface-variant mb-10 max-w-xl leading-relaxed font-light"
           >
-            Full-Stack Developer &amp; IT Support based in{' '}
-            <span className="text-on-surface font-semibold">Wellington, NZ</span>.{' '}
-            Crafting high-performance digital experiences.
+            <span className="text-on-surface font-semibold block mb-2">{PERSONAL_INFO.title}</span>
+            {PERSONAL_INFO.tagline}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -77,18 +71,24 @@ export default function Hero() {
           >
             <button
               onClick={scrollToProjects}
-              className="gradient-primary text-on-primary px-8 py-4 rounded-md font-bold text-base hover:opacity-90 transition-all active:scale-95 shadow-lg shadow-black/20"
+              className="bg-primary text-on-primary px-8 py-4 rounded-full font-bold text-base hover:opacity-90 transition-opacity active:scale-95 shadow-sm"
             >
               View Projects
             </button>
             <a
               href={PERSONAL_INFO.cvPath}
               download="Bhupinder_Singh_CV.pdf"
-              className="flex items-center gap-2 border border-[rgba(63,73,73,0.3)] text-primary px-8 py-4 rounded-md font-bold text-base hover:bg-surface-container-low transition-all active:scale-95"
+              className="flex items-center gap-2 border border-glass-stroke bg-surface/30 backdrop-blur-md text-on-surface px-8 py-4 rounded-full font-bold text-base hover:bg-surface-variant transition-colors active:scale-95"
             >
               <Download size={16} />
               Download CV
             </a>
+            <button
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="border border-glass-stroke bg-surface/30 backdrop-blur-md text-on-surface px-8 py-4 rounded-full font-bold text-base hover:bg-surface-variant transition-colors active:scale-95"
+            >
+              Contact Me
+            </button>
           </motion.div>
 
           {/* Social Links */}
@@ -131,22 +131,17 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.15, type: 'spring', stiffness: 100 }}
             className="relative group"
           >
-            {/* Ambient glow ring */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 rounded-full blur-3xl transition-all duration-700 group-hover:opacity-60 opacity-30"
-              style={{ background: 'radial-gradient(circle, #75d5e2, transparent 70%)' }}
-            />
+            {/* Glow ring removed for a cleaner look */}
             {/* Photo container */}
             <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full overflow-hidden ring-4 ring-surface-container-highest shadow-2xl">
               {/* Initials fallback — sits behind */}
-              <div className="absolute inset-0 gradient-primary flex items-center justify-center text-on-primary text-5xl font-extrabold font-headline tracking-tighter select-none z-0">
+              <div className="absolute inset-0 bg-surface-variant flex items-center justify-center text-on-surface-variant text-5xl font-extrabold font-headline tracking-tighter select-none z-0">
                 BS
               </div>
               {/* Real photo — sits on top */}
               <Image
-                src="/profile.jpg"
-                alt="Bhupinder Singh — Full-Stack Developer"
+                src={PERSONAL_INFO.profilePhoto}
+                alt={PERSONAL_INFO.name}
                 fill
                 priority
                 className="object-cover object-top group-hover:scale-105 transition-transform duration-700 z-10 relative"
