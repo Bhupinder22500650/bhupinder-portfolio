@@ -1,6 +1,6 @@
 'use client';
 
-import { Heart, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons';
 import { PERSONAL_INFO } from '@/lib/constants';
 

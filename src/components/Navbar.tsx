@@ -82,13 +82,25 @@ export default function Navbar() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex items-center gap-4"
           >
-            {/* Theme Toggle */}
+            {/* Theme Toggle Switch */}
             <button
               onClick={toggle}
               aria-label="Toggle theme"
-              className="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 active:scale-90"
+              className={`relative flex items-center w-14 h-8 rounded-full p-1 transition-colors duration-300 ${
+                theme === 'dark' ? 'bg-primary' : 'bg-surface-container-highest'
+              } ${theme === 'dark' ? 'justify-end' : 'justify-start'}`}
             >
-              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+              <motion.div
+                layout
+                transition={{ type: "spring", stiffness: 700, damping: 30 }}
+                className="w-6 h-6 bg-white rounded-full shadow-sm flex items-center justify-center z-10"
+              >
+                {theme === 'dark' ? (
+                  <Moon size={12} className="text-primary fill-primary" />
+                ) : (
+                  <Sun size={12} className="text-amber-500 fill-amber-500" />
+                )}
+              </motion.div>
             </button>
 
             {/* Download CV */}

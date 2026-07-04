@@ -5,6 +5,7 @@ import TestingExperience from '@/components/TestingExperience';
 import Projects from '@/components/Projects';
 import Certificates from '@/components/Certificates';
 import Contact from '@/components/Contact';
+import GitHubActivity from '@/components/GitHubActivity';
 import Footer from '@/components/Footer';
 
 export default function HomePage() {
@@ -15,6 +16,7 @@ export default function HomePage() {
         <Hero />
         <About />
         <TestingExperience />
+        <GitHubActivity />
         <Projects />
         <Certificates />
         <Contact />

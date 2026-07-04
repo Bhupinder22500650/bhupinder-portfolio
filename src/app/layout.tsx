@@ -3,6 +3,9 @@ import { Manrope, Libre_Caslon_Text, JetBrains_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 import { PERSONAL_INFO } from '@/lib/constants';
+import ThemeCustomizer from '@/components/ThemeCustomizer';
+import TerminalMode from '@/components/TerminalMode';
+import Chatbot from '@/components/Chatbot';
 
 const manrope = Manrope({
   subsets: ['latin'],
@@ -77,8 +80,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   var stored = localStorage.getItem('theme');
                   var preferred = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                   document.documentElement.setAttribute('data-theme', preferred);
+                  
+                  var primary = localStorage.getItem('primary-theme') || 'cyan';
+                  document.documentElement.setAttribute('data-primary', primary);
                 } catch(e) {
                   document.documentElement.setAttribute('data-theme', 'dark');
+                  document.documentElement.setAttribute('data-primary', 'cyan');
                 }
               })();
             `,
@@ -87,6 +94,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${manrope.variable} ${libreCaslon.variable} ${jetbrainsMono.variable}`}>
         {children}
+        <ThemeCustomizer />
+        <TerminalMode />
+        <Chatbot />
         <Analytics />
       </body>
     </html>
