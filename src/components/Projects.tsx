@@ -46,7 +46,13 @@ function ProjectCard({ repo, onOpenCaseStudy }: { repo: GitHubRepo; onOpenCaseSt
       {/* Thumbnail Image */}
       {repo.images && repo.images[0] ? (
         <div className="relative w-full h-40 bg-surface-variant/50 border-b border-glass-stroke overflow-hidden">
-          <Image src={repo.images[0]} alt={repo.name} fill className="object-cover z-10" />
+          <Image
+            src={repo.images[0]}
+            alt={repo.name}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover z-10"
+          />
         </div>
       ) : (
         <div className="relative w-full h-40 bg-surface-variant flex items-center justify-center border-b border-glass-stroke text-on-surface-variant/50">

@@ -154,6 +154,7 @@ export default function Hero() {
                 src={PERSONAL_INFO.profilePhoto}
                 alt={PERSONAL_INFO.name}
                 fill
+                sizes="(max-width: 640px) 256px, (max-width: 768px) 288px, 320px"
                 priority
                 className="object-cover object-top group-hover:scale-105 transition-transform duration-700 z-10 relative"
               />
