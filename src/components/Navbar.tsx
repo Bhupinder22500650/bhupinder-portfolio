@@ -48,10 +48,12 @@ export default function Navbar() {
     <>
       <nav
         className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-5xl z-50 transition-[top,box-shadow,background-color,border-radius,padding] duration-300 border border-glass-stroke backdrop-blur-xl ${
-          scrolled
-            ? 'top-4 shadow-[0_12px_40px_rgba(0,0,0,0.15)] bg-surface/85'
-            : 'top-6 shadow-sm bg-surface/70'
-        } ${mobileOpen ? 'rounded-[24px] py-4' : 'rounded-full py-2.5 md:py-4'}`}
+          mobileOpen
+            ? 'top-4 shadow-[0_12px_40px_rgba(0,0,0,0.15)] bg-surface rounded-[24px] py-4'
+            : scrolled
+            ? 'top-4 shadow-[0_12px_40px_rgba(0,0,0,0.15)] bg-surface/85 rounded-full py-2.5 md:py-4'
+            : 'top-6 shadow-sm bg-surface/70 rounded-full py-4'
+        }`}
       >
         <div className="flex justify-between items-center px-4 md:px-6 w-full">
           {/* Logo */}
@@ -153,10 +155,10 @@ export default function Navbar() {
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.href)}
-                  className={`text-left text-sm font-semibold py-1.5 transition-colors ${
+                  className={`text-left text-base font-bold py-2.5 transition-colors ${
                     activeSection === link.id
                       ? 'text-primary'
-                      : 'text-on-surface-variant hover:text-on-surface'
+                      : 'text-on-surface hover:text-primary'
                   }`}
                 >
                   {link.label}
@@ -165,9 +167,9 @@ export default function Navbar() {
               <a
                 href={PERSONAL_INFO.cvPath}
                 download="Bhupinder_Singh_CV.pdf"
-                className="mt-2 flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary text-on-primary text-xs font-bold justify-center hover:opacity-90 transition-opacity active:scale-95 shadow-sm"
+                className="mt-3 flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-on-primary text-sm font-bold justify-center hover:opacity-90 transition-opacity active:scale-95 shadow-sm"
               >
-                <Download size={12} />
+                <Download size={14} />
                 Download CV
               </a>
             </motion.div>
