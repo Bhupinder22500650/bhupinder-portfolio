@@ -32,7 +32,7 @@ function formatRepoName(name: string) {
 
 function ProjectCard({ repo, onOpenCaseStudy }: { repo: GitHubRepo; onOpenCaseStudy: () => void }) {
   const tags = repo.topics?.length ? repo.topics.slice(0, 3) : repo.language ? [repo.language] : [];
-  const langColor = LANGUAGE_COLORS[repo.language || ''] || '#75d5e2';
+  const langColor = LANGUAGE_COLORS[repo.language || ''] || '#C28459';
 
   return (
     <div className="group relative bg-surface rounded-lg overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl hover:bg-surface-bright flex flex-col h-full border border-glass-stroke">

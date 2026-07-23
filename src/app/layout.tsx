@@ -94,11 +94,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   var preferred = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
                   document.documentElement.setAttribute('data-theme', preferred);
                   
-                  var primary = localStorage.getItem('primary-theme') || 'cyan';
+                  var primary = localStorage.getItem('primary-theme') || 'clay';
                   document.documentElement.setAttribute('data-primary', primary);
                 } catch(e) {
                   document.documentElement.setAttribute('data-theme', 'dark');
-                  document.documentElement.setAttribute('data-primary', 'cyan');
+                  document.documentElement.setAttribute('data-primary', 'clay');
                 }
               })();
             `,

@@ -7,82 +7,113 @@
 
 @layer base {
   :root {
-    /* Stitch "Digital Curator" Theme */
-    --color-surface: #141313;
-    --color-surface-dim: #141313;
-    --color-surface-bright: #3a3939;
-    --color-surface-container-lowest: #0e0e0e;
-    --color-surface-container-low: #1c1b1b;
-    --color-surface-container: #201f1f;
-    --color-surface-container-high: #2a2a2a;
-    --color-surface-container-highest: #353435;
-    --color-surface-variant: #353435;
-    --color-on-surface: #e5e2e1;
-    --color-on-surface-variant: #c5c6ca;
-    --color-primary: #75D5E2; /* Mapped to Electric Blue for primary CTA */
-    --color-primary-container: #1a1c1e;
-    --color-on-primary: #00363c;
-    --color-secondary: #c6c6c9;
-    --color-outline: #8f9194;
-    --color-outline-variant: #44474a;
-    --color-background: #141313;
-    --color-on-background: #e5e2e1;
+    /* Soothing Warm Charcoal-Cocoa Dark Mode (Default) */
+    --color-surface: #1B1917;
+    --color-surface-dim: #151312;
+    --color-surface-bright: #35312E;
+    --color-surface-container-lowest: #11100F;
+    --color-surface-container-low: #22201D;
+    --color-surface-container: #2B2825;
+    --color-surface-container-high: #3A3632;
+    --color-surface-container-highest: #4C4742;
+    --color-surface-variant: #35312E;
+    --color-on-surface: #F4ECE8;
+    --color-on-surface-variant: #C1B4AE;
+    --color-primary: #D29871; /* Terracotta */
+    --color-primary-container: #3E271B;
+    --color-on-primary: #1C0F0A;
+    --color-secondary: #A29792;
+    --color-outline: #857C78;
+    --color-outline-variant: #4E4945;
+    --color-background: #1B1917;
+    --color-on-background: #F4ECE8;
     
-    /* Digital Curator Accents */
-    --color-electric-blue: #75D5E2;
-    --color-cyber-lime: #D4FF33;
-    --color-slate-gray: #343A40;
-    --color-off-white: #F8F9FA;
-    --color-glass-stroke: rgba(255, 255, 255, 0.1);
+    /* Soothing Accents */
+    --color-electric-blue: #8FABB9; /* Soothing Slate Blue */
+    --color-cyber-lime: #789A6A; /* Soothing Sage Green */
+    --color-slate-gray: #4E4945;
+    --color-off-white: #F4ECE8;
+    --color-glass-stroke: rgba(255, 255, 255, 0.08);
   }
 
-  /* Light mode overrides - Off-white theme */
+  /* Light mode overrides - Soothing Warm Cream theme */
   [data-theme="light"] {
-    --color-surface: #F8F9FA;
-    --color-surface-dim: #f0f0f0;
-    --color-surface-bright: #ffffff;
-    --color-surface-container-lowest: #ffffff;
-    --color-surface-container-low: #f4f4f5;
-    --color-surface-container: #e4e4e7;
-    --color-surface-container-high: #d4d4d8;
-    --color-surface-container-highest: #a1a1aa;
-    --color-surface-variant: #f4f4f5;
-    --color-on-surface: #141313;
-    --color-on-surface-variant: #343A40;
-    --color-primary: #75D5E2;
-    --color-primary-container: #00818d;
-    --color-on-primary: #001f23;
-    --color-secondary: #5d5e61;
-    --color-outline: #8f9194;
-    --color-outline-variant: #e4e4e7;
-    --color-background: #F8F9FA;
-    --color-on-background: #141313;
-    --color-glass-stroke: rgba(0, 0, 0, 0.1);
+    --color-surface: #F5F2EB;
+    --color-surface-dim: #EAE5DB;
+    --color-surface-bright: #FAF8F5;
+    --color-surface-container-lowest: #FFFFFF;
+    --color-surface-container-low: #EDE9E0;
+    --color-surface-container: #E4DFD4;
+    --color-surface-container-high: #D8D2C5;
+    --color-surface-container-highest: #BFB7A7;
+    --color-surface-variant: #EDE9E0;
+    --color-on-surface: #2C2623;
+    --color-on-surface-variant: #706560;
+    --color-primary: #C28459; /* Soothing Clay/Terracotta */
+    --color-primary-container: #FFD9C2;
+    --color-on-primary: #FFFFFF;
+    --color-secondary: #786B65;
+    --color-outline: #A89C96;
+    --color-outline-variant: #E4DFD4;
+    --color-background: #F5F2EB;
+    --color-on-background: #2C2623;
+    --color-glass-stroke: rgba(44, 38, 35, 0.08);
   }
 
-  /* Accent Color Overrides */
-  [data-primary="indigo"] {
-    --color-primary: #818cf8;
-    --color-primary-container: #4f46e5;
-    --color-on-primary: #ffffff;
+  /* Soothing Accent Color Overrides */
+  [data-primary="clay"] {
+    --color-primary: #C28459;
+    --color-primary-container: #FFD9C2;
+    --color-on-primary: #FFFFFF;
   }
-  [data-primary="emerald"] {
-    --color-primary: #34d399;
-    --color-primary-container: #059669;
-    --color-on-primary: #ffffff;
+  [data-theme="dark"] [data-primary="clay"] {
+    --color-primary: #D29871;
+    --color-primary-container: #3E271B;
+    --color-on-primary: #1C0F0A;
   }
+
+  [data-primary="slate"] {
+    --color-primary: #768D9C;
+    --color-primary-container: #D1E5F2;
+    --color-on-primary: #FFFFFF;
+  }
+  [data-theme="dark"] [data-primary="slate"] {
+    --color-primary: #8FABB9;
+    --color-primary-container: #1D2E3A;
+    --color-on-primary: #0F1A21;
+  }
+
+  [data-primary="sage"] {
+    --color-primary: #7C9573;
+    --color-primary-container: #D5ECD0;
+    --color-on-primary: #FFFFFF;
+  }
+  [data-theme="dark"] [data-primary="sage"] {
+    --color-primary: #94AD8C;
+    --color-primary-container: #202D1C;
+    --color-on-primary: #111A0E;
+  }
+
   [data-primary="rose"] {
-    --color-primary: #fb7185;
-    --color-primary-container: #e11d48;
-    --color-on-primary: #ffffff;
+    --color-primary: #C98686;
+    --color-primary-container: #FCDEDE;
+    --color-on-primary: #FFFFFF;
   }
-  [data-primary="amber"] {
-    --color-primary: #fbbf24;
-    --color-primary-container: #d97706;
-    --color-on-primary: #ffffff;
+  [data-theme="dark"] [data-primary="rose"] {
+    --color-primary: #E19F9F;
+    --color-primary-container: #3E1E1E;
+    --color-on-primary: #210D0D;
   }
-  [data-primary="cyan"] {
-    --color-primary: #75D5E2;
+
+  [data-primary="ochre"] {
+    --color-primary: #C59E5E;
+    --color-primary-container: #FCEFD5;
+    --color-on-primary: #FFFFFF;
+  }
+  [data-theme="dark"] [data-primary="ochre"] {
+    --color-primary: #DDB678;
+    --color-primary-container: #3E2F16;
+    --color-on-primary: #20170A;
   }
 
   html {
@@ -211,7 +242,7 @@
   .input-animated {
     background-color: var(--color-surface-container-low);
     border: none;
-    border-bottom: 2px solid rgba(117, 213, 226, 0.2);
+    border-bottom: 2px solid var(--color-outline-variant);
     border-radius: 4px 4px 0 0;
     color: var(--color-on-surface);
     outline: none;

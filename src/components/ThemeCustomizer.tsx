@@ -5,20 +5,20 @@ import { Palette, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const THEMES = [
-  { id: 'cyan', name: 'Cyan', color: '#75D5E2' },
-  { id: 'indigo', name: 'Indigo', color: '#818cf8' },
-  { id: 'emerald', name: 'Emerald', color: '#34d399' },
-  { id: 'rose', name: 'Rose', color: '#fb7185' },
-  { id: 'amber', name: 'Amber', color: '#fbbf24' },
+  { id: 'clay', name: 'Clay', color: '#C28459' },
+  { id: 'slate', name: 'Slate', color: '#768D9C' },
+  { id: 'sage', name: 'Sage', color: '#7C9573' },
+  { id: 'rose', name: 'Rose', color: '#C98686' },
+  { id: 'ochre', name: 'Ochre', color: '#C59E5E' },
 ];
 
 export default function ThemeCustomizer() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTheme, setActiveTheme] = useState('cyan');
+  const [activeTheme, setActiveTheme] = useState('clay');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem('primary-theme') || 'cyan';
+    const saved = localStorage.getItem('primary-theme') || 'clay';
     document.documentElement.setAttribute('data-primary', saved);
     const timer = setTimeout(() => {
       setMounted(true);

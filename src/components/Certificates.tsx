@@ -22,11 +22,11 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Development: '#75d5e2',
-  Networking: '#ffb688',
-  Data: '#a78bfa',
-  DevOps: '#34d399',
-  'IT Support': '#f87171',
+  Development: '#768D9C', // Slate Blue
+  Networking: '#C59E5E', // Ochre
+  Data: '#9685B5', // Muted Violet
+  DevOps: '#7C9573', // Sage
+  'IT Support': '#C98686', // Dusty Rose
 };
 
 export default function Certificates() {
@@ -52,7 +52,7 @@ export default function Certificates() {
         {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {CERTIFICATES.map((cert, i) => {
-            const accentColor = CATEGORY_COLORS[cert.category] || '#75d5e2';
+            const accentColor = CATEGORY_COLORS[cert.category] || '#C28459';
             return (
               <FadeUp key={cert.id} delay={i * 0.08}>
                 <a
