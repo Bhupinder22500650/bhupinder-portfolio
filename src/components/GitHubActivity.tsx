@@ -114,7 +114,7 @@ export default function GitHubActivity() {
       case 'deploy': return <Server size={16} className="text-emerald-400" />;
       case 'fix': return <Zap size={16} className="text-amber-400" />;
       case 'refactor': return <GitPullRequest size={16} className="text-blue-400" />;
-      default: return <Terminal size={16} className="text-outline" />;
+      default: return <Terminal size={16} className="text-zinc-500" />;
     }
   };
 
@@ -125,7 +125,7 @@ export default function GitHubActivity() {
       case 'deploy': return 'text-emerald-400';
       case 'fix': return 'text-amber-400';
       case 'refactor': return 'text-blue-400';
-      default: return 'text-on-surface';
+      default: return 'text-zinc-200';
     }
   };
 
@@ -169,16 +169,16 @@ export default function GitHubActivity() {
         </div>
 
         {/* Waterfall Container */}
-        <div className="relative h-[450px] w-full rounded-xl bg-[#0a0a0a] border border-glass-stroke shadow-2xl overflow-hidden font-mono">
+        <div className="relative h-[450px] w-full rounded-xl bg-[#0a0a0a] border border-zinc-800 shadow-2xl overflow-hidden font-mono">
           
           {/* Terminal Header */}
-          <div className="absolute top-0 left-0 w-full h-10 bg-[#1a1a1a] border-b border-glass-stroke flex items-center px-4 z-20">
+          <div className="absolute top-0 left-0 w-full h-10 bg-[#1a1a1a] border-b border-zinc-800 flex items-center px-4 z-20">
             <div className="flex gap-2">
               <div className="w-3 h-3 rounded-full bg-red-500/80" />
               <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
               <div className="w-3 h-3 rounded-full bg-green-500/80" />
             </div>
-            <span className="ml-4 text-xs text-on-surface-variant flex items-center gap-2">
+            <span className="ml-4 text-xs text-zinc-400 flex items-center gap-2">
               <Terminal size={12} /> root@bhupinder-server:~
             </span>
           </div>
@@ -201,13 +201,13 @@ export default function GitHubActivity() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
                       transition={{ type: 'spring', stiffness: 500, damping: 40 }}
-                      className="flex items-center gap-3 text-sm border-l-2 border-transparent hover:border-glass-stroke pl-2 transition-colors cursor-default"
+                      className="flex items-center gap-3 text-sm border-l-2 border-transparent hover:border-zinc-800/80 pl-2 transition-colors cursor-default"
                     >
-                      <div className="w-20 shrink-0 text-xs text-on-surface-variant/50">
+                      <div className="w-20 shrink-0 text-xs text-zinc-500">
                         [{event.hash}]
                       </div>
                       
-                      <div className="flex items-center justify-center w-6 h-6 rounded bg-surface-container-lowest border border-glass-stroke shrink-0">
+                      <div className="flex items-center justify-center w-6 h-6 rounded bg-[#161616] border border-zinc-800 shrink-0">
                         {getEventIcon(event.type)}
                       </div>
                       
@@ -215,8 +215,8 @@ export default function GitHubActivity() {
                         <span className={`font-semibold shrink-0 ${getEventColor(event.type)}`}>
                           {event.message}
                         </span>
-                        <span className="text-on-surface-variant/40 hidden sm:inline-block">→</span>
-                        <span className="text-on-surface truncate opacity-80">
+                        <span className="text-zinc-600 hidden sm:inline-block">→</span>
+                        <span className="text-zinc-300 truncate">
                           {event.repo}
                         </span>
                       </div>
