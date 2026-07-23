@@ -150,7 +150,7 @@ export default function Projects() {
   const [selectedRepo, setSelectedRepo] = useState<GitHubRepo | null>(null);
 
   return (
-    <section id="projects" className="py-32 bg-surface">
+    <section id="projects" className="py-16 md:py-32 bg-surface">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <FadeUp>
           <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-16 gap-4">
@@ -186,6 +186,24 @@ export default function Projects() {
               </FadeUp>
             ))}
         </div>
+
+        {/* Note below projects */}
+        <FadeUp delay={0.2}>
+          <div className="mt-16 text-center border-t border-glass-stroke/50 pt-12 max-w-xl mx-auto">
+            <p className="text-on-surface-variant text-sm leading-relaxed mb-6">
+              Looking for more? These featured projects represent a snapshot of my skills in web development, testing, and IT support. For more coding experiments, automation suites, and full-stack repositories, please explore my GitHub profile!
+            </p>
+            <a
+              href={`https://github.com/${GITHUB_USERNAME}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-surface-container-low border border-glass-stroke text-on-surface hover:text-primary hover:border-primary/40 hover:bg-surface-bright transition-all active:scale-95 shadow-sm text-sm font-bold group"
+            >
+              <span>Explore more on GitHub</span>
+              <GithubIcon size={16} className="text-on-surface-variant group-hover:text-primary transition-colors" />
+            </a>
+          </div>
+        </FadeUp>
 
         {/* Global Case Study Modal */}
         <AnimatePresence>

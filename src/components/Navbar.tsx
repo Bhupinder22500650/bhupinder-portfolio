@@ -30,17 +30,28 @@ export default function Navbar() {
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
     const id = href.replace('#', '');
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const element = document.getElementById(id);
+    if (element) {
+      setTimeout(() => {
+        const offset = 85; // Fixed navbar offset
+        const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+        const offsetPosition = elementPosition - offset;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }, 250); // Wait for menu close transition to prevent layout shifts interrupting scroll
+    }
   };
 
   return (
     <>
       <nav
-        className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-5xl z-50 transition-all duration-500 rounded-full border border-glass-stroke backdrop-blur-xl ${
+        className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-5xl z-50 transition-[top,box-shadow,background-color,border-radius,padding] duration-300 border border-glass-stroke backdrop-blur-xl ${
           scrolled
-            ? 'top-4 shadow-[0_12px_40px_rgba(0,0,0,0.15)] py-2.5 bg-surface/85'
-            : 'top-6 shadow-sm py-4 bg-surface/70'
-        }`}
+            ? 'top-4 shadow-[0_12px_40px_rgba(0,0,0,0.15)] bg-surface/85'
+            : 'top-6 shadow-sm bg-surface/70'
+        } ${mobileOpen ? 'rounded-[24px] py-4' : 'rounded-full py-2.5 md:py-4'}`}
       >
         <div className="flex justify-between items-center px-4 md:px-6 w-full">
           {/* Logo */}
@@ -127,47 +138,42 @@ export default function Navbar() {
             </button>
           </motion.div>
         </div>
-      </nav>
 
-      {/* Mobile Drawer */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            key="drawer"
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 28, stiffness: 250 }}
-            className="fixed top-0 right-0 bottom-0 w-[75vw] max-w-xs z-40 bg-surface flex flex-col pt-24 px-8 gap-6 shadow-2xl"
-          >
-            {NAV_LINKS.map((link, i) => (
-              <motion.button
-                key={link.id}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.07 }}
-                onClick={() => handleNavClick(link.href)}
-                className={`text-left text-2xl font-bold font-headline tracking-tight transition-colors ${
-                  activeSection === link.id ? 'text-primary' : 'text-on-surface-variant hover:text-on-surface'
-                }`}
-              >
-                {link.label}
-              </motion.button>
-            ))}
-            <motion.a
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              href={PERSONAL_INFO.cvPath}
-              download="Bhupinder_Singh_CV.pdf"
-              className="mt-4 flex items-center gap-2 px-5 py-3 rounded-full bg-primary text-on-primary text-base font-bold justify-center active:scale-95 hover:opacity-90 transition-opacity"
+        {/* Mobile Dropdown */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className="md:hidden overflow-hidden flex flex-col gap-2 mt-4 px-6 border-t border-glass-stroke pt-4"
             >
-              <Download size={16} />
-              Download CV
-            </motion.a>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              {NAV_LINKS.map((link) => (
+                <button
+                  key={link.id}
+                  onClick={() => handleNavClick(link.href)}
+                  className={`text-left text-sm font-semibold py-1.5 transition-colors ${
+                    activeSection === link.id
+                      ? 'text-primary'
+                      : 'text-on-surface-variant hover:text-on-surface'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              ))}
+              <a
+                href={PERSONAL_INFO.cvPath}
+                download="Bhupinder_Singh_CV.pdf"
+                className="mt-2 flex items-center gap-2 px-4 py-2.5 rounded-full bg-primary text-on-primary text-xs font-bold justify-center hover:opacity-90 transition-opacity active:scale-95 shadow-sm"
+              >
+                <Download size={12} />
+                Download CV
+              </a>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
 
       {/* Backdrop */}
       <AnimatePresence>
@@ -178,7 +184,7 @@ export default function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setMobileOpen(false)}
-            className="fixed inset-0 z-30 bg-black/50 md:hidden"
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
           />
         )}
       </AnimatePresence>

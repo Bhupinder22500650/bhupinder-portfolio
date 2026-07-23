@@ -31,7 +31,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export default function Certificates() {
   return (
-    <section id="certificates" className="py-32 bg-surface-dim">
+    <section id="certificates" className="py-16 md:py-32 bg-surface-dim">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
 
         {/* Header */}

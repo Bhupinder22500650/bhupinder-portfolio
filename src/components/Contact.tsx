@@ -107,7 +107,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-32 bg-surface-dim">
+    <section id="contact" className="py-16 md:py-32 bg-surface-dim">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
 

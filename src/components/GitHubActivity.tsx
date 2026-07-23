@@ -130,7 +130,7 @@ export default function GitHubActivity() {
   };
 
   return (
-    <section className="py-24 bg-surface relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-surface relative overflow-hidden">
       {/* Background Matrix-like gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-surface via-surface-container-lowest to-surface z-0 opacity-50" />
       

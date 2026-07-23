@@ -21,7 +21,7 @@ function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 export default function About() {
   return (
-    <section id="about" className="py-32 bg-surface-dim">
+    <section id="about" className="py-16 md:py-32 bg-surface-dim">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
 
