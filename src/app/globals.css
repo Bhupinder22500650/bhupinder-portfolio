@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --font-outfit: var(--font-outfit), sans-serif;
+  --font-reenie-beanie: var(--font-reenie-beanie), cursive;
+}
+
 @layer base {
   :root {
     /* Stitch "Digital Curator" Theme */

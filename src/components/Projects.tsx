@@ -2,11 +2,10 @@
 
 import { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Star, Calendar, Image as ImageIcon, FileText, X } from 'lucide-react';
+import { ExternalLink, Star, Calendar, FileText, X } from 'lucide-react';
 import { GithubIcon } from '@/components/icons';
 import { useGitHubRepos, GitHubRepo } from '@/hooks/useGitHubRepos';
 import { GITHUB_USERNAME, LANGUAGE_COLORS } from '@/lib/constants';
-import Image from 'next/image';
 
 function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null);
@@ -43,22 +42,7 @@ function ProjectCard({ repo, onOpenCaseStudy }: { repo: GitHubRepo; onOpenCaseSt
         style={{ background: `linear-gradient(90deg, ${langColor}, var(--color-primary))` }}
       />
 
-      {/* Thumbnail Image */}
-      {repo.images && repo.images[0] ? (
-        <div className="relative w-full h-40 bg-surface-variant/50 border-b border-glass-stroke overflow-hidden">
-          <Image
-            src={repo.images[0]}
-            alt={repo.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover z-10"
-          />
-        </div>
-      ) : (
-        <div className="relative w-full h-40 bg-surface-variant flex items-center justify-center border-b border-glass-stroke text-on-surface-variant/50">
-          <ImageIcon size={48} />
-        </div>
-      )}
+
 
       <div className="p-6 md:p-8 flex flex-col flex-1">
         <div className="flex flex-wrap gap-2 mb-4">
@@ -145,9 +129,8 @@ function ProjectCard({ repo, onOpenCaseStudy }: { repo: GitHubRepo; onOpenCaseSt
 
 function SkeletonCard() {
   return (
-    <div className="bg-surface-container-low rounded-xl p-8 h-[380px] flex flex-col gap-4">
-      <div className="h-48 w-full bg-surface-variant animate-pulse rounded" />
-      <div className="flex gap-2 mt-4">
+    <div className="bg-surface-container-low rounded-xl p-8 flex flex-col gap-4 h-full border border-glass-stroke">
+      <div className="flex gap-2">
         <div className="h-5 w-14 rounded shimmer" />
         <div className="h-5 w-10 rounded shimmer" />
       </div>

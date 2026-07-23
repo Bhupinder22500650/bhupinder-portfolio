@@ -77,17 +77,34 @@ export default function GitHubActivity() {
   useEffect(() => {
     if (repos.length === 0) return;
     
-    // Initial burst
+    // Initial burst generated in a single batch to avoid multiple state updates
+    const initialEvents: StreamEvent[] = [];
     for (let i = 0; i < 8; i++) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      addStreamEvent();
+      const type = EVENT_TYPES[Math.floor(Math.random() * EVENT_TYPES.length)];
+      const messages = FAKE_MESSAGES[type];
+      const message = messages[Math.floor(Math.random() * messages.length)];
+      const repo = repos[Math.floor(Math.random() * repos.length)];
+      const hash = generateHash();
+      initialEvents.push({
+        id: Math.random().toString(36).substr(2, 9),
+        type,
+        repo,
+        message,
+        hash
+      });
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsStreaming(true);
+    
+    const timer = setTimeout(() => {
+      setStream(initialEvents);
+      setIsStreaming(true);
+    }, 0);
 
     // Fast waterfall interval (every 400ms)
     const interval = setInterval(addStreamEvent, 400);
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
   }, [repos, addStreamEvent]);
 
   const getEventIcon = (type: string) => {

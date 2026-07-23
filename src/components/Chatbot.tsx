@@ -16,27 +16,45 @@ const INITIAL_MESSAGE: Message = {
   text: "Hi! I'm Bhupinder's AI Assistant. Ask me about his skills, experience, or how to contact him!",
 };
 
+import { PERSONAL_INFO, SKILLS, EDUCATION } from '@/lib/constants';
+
+// Format skills dynamically
+const strongSkills = SKILLS.find(s => s.category === 'Strong')?.items.join(', ') || '';
+const workingSkills = SKILLS.find(s => s.category === 'Working Knowledge')?.items.join(', ') || '';
+const learningSkills = SKILLS.find(s => s.category === 'Learning')?.items.join(', ') || '';
+
+// Format experience dynamically
+const currentJobs = EDUCATION.filter(item => item.current).map(item => `${item.title} at ${item.institution}`).join(' and ');
+const pastJobs = EDUCATION.filter(item => !item.current).map(item => `${item.title} at ${item.institution}`).join(', ');
+
 // Simple rule-based logic
 function getBotResponse(input: string): string {
   const lower = input.toLowerCase();
 
   if (lower.includes('skill') || lower.includes('tech') || lower.includes('stack')) {
-    return 'Bhupinder is skilled in QA/Testing (Jest, Cypress, Postman, Selenium), Frontend (React, Next.js, Tailwind, TypeScript), and Backend (Node.js, Express, PostgreSQL).';
+    return `Bhupinder's skills are divided into:
+• Strong: ${strongSkills}
+• Working Knowledge: ${workingSkills}
+• Learning: ${learningSkills}`;
   }
   if (lower.includes('test') || lower.includes('qa')) {
-    return 'He has a strong testing mindset with hands-on experience in manual and automated testing, UI diagnostics, and API validation using tools like Cypress and Postman.';
+    const testJob = EDUCATION.find(e => e.title.toLowerCase().includes('tester') || e.title.toLowerCase().includes('testing'));
+    if (testJob) {
+      return `Bhupinder is currently working as a ${testJob.title} at ${testJob.institution}. His role involves: ${testJob.description}`;
+    }
+    return `Bhupinder has a dedicated testing mindset, focusing on manual testing basics, functionality checking, user flows, UI/UX diagnostics, and bug reporting.`;
   }
   if (lower.includes('experience') || lower.includes('work') || lower.includes('job')) {
-    return 'He has worked as an IT Support Technician at Wellington E2E Center, providing hardware/software troubleshooting, and is currently expanding his Full-Stack and QA skills.';
+    return `Bhupinder's active roles include: ${currentJobs}. Previously, he has experience as a ${pastJobs}.`;
   }
   if (lower.includes('contact') || lower.includes('hire') || lower.includes('email')) {
-    return 'You can reach him via the Contact form below, or email him directly. Check out his LinkedIn profile in the navigation bar!';
+    return `You can reach Bhupinder directly via email at ${PERSONAL_INFO.email}, connect with him on LinkedIn: ${PERSONAL_INFO.linkedin}, or view his projects on GitHub: ${PERSONAL_INFO.github}. You can also use the contact form at the bottom of the page!`;
   }
   if (lower.includes('hello') || lower.includes('hi ') || lower.includes('hey')) {
-    return 'Hello there! How can I help you learn more about Bhupinder?';
+    return `Hello there! How can I help you learn more about Bhupinder?`;
   }
 
-  return "That's a great question! While I'm just a simple bot, Bhupinder would love to discuss this with you in an interview. Feel free to contact him!";
+  return `That's a great question! While I'm just a simple chatbot, Bhupinder would love to discuss this with you. Feel free to reach out to him via the contact form or email!`;
 }
 
 export default function Chatbot() {

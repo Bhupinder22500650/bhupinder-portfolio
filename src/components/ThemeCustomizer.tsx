@@ -18,11 +18,13 @@ export default function ThemeCustomizer() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
     const saved = localStorage.getItem('primary-theme') || 'cyan';
-    setActiveTheme(saved);
     document.documentElement.setAttribute('data-primary', saved);
+    const timer = setTimeout(() => {
+      setMounted(true);
+      setActiveTheme(saved);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const changeTheme = (themeId: string) => {

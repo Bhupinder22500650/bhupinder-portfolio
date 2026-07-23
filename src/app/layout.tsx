@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Manrope, Libre_Caslon_Text, JetBrains_Mono } from 'next/font/google';
+import { Manrope, Libre_Caslon_Text, JetBrains_Mono, Outfit, Reenie_Beanie } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
 import './globals.css';
 import { PERSONAL_INFO } from '@/lib/constants';
@@ -23,6 +23,19 @@ const libreCaslon = Libre_Caslon_Text({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-jetbrains-mono',
+  display: 'swap',
+});
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  variable: '--font-outfit',
+  display: 'swap',
+});
+
+const reenieBeanie = Reenie_Beanie({
+  weight: ['400'],
+  subsets: ['latin'],
+  variable: '--font-reenie-beanie',
   display: 'swap',
 });
 
@@ -92,7 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`${manrope.variable} ${libreCaslon.variable} ${jetbrainsMono.variable}`}>
+      <body className={`${manrope.variable} ${libreCaslon.variable} ${jetbrainsMono.variable} ${outfit.variable} ${reenieBeanie.variable}`}>
         {children}
         <ThemeCustomizer />
         <TerminalMode />

@@ -36,6 +36,25 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (state === 'sending') return;
+
+    // Validate fields
+    const name = formData.from_name.trim();
+    const email = formData.from_email.trim();
+    const message = formData.message.trim();
+
+    if (!name || !email || !message) {
+      setState('error');
+      setTimeout(() => setState('idle'), 5000);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setState('error');
+      setTimeout(() => setState('idle'), 5000);
+      return;
+    }
+
     setState('sending');
 
     try {
@@ -50,9 +69,9 @@ export default function Contact() {
         EMAILJS_CONFIG.serviceId,
         EMAILJS_CONFIG.templateId,
         {
-          from_name: formData.from_name,
-          from_email: formData.from_email,
-          message: formData.message,
+          from_name: name,
+          from_email: email,
+          message: message,
         },
         { publicKey: EMAILJS_CONFIG.publicKey }
       );
@@ -131,7 +150,7 @@ export default function Contact() {
           {/* Right — Contact Form */}
           <FadeUp delay={0.15}>
             <div className="bg-surface/50 backdrop-blur-md border border-glass-stroke p-8 md:p-10 rounded-2xl shadow-2xl">
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-7" noValidate>
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-7">
                 {/* Name */}
                 <div>
                   <label htmlFor="contact-name" className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">

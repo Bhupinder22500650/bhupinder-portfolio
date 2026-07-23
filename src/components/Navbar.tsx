@@ -36,22 +36,25 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 w-full z-50 transition-all duration-300 glass-nav ${
-          scrolled ? 'shadow-[0px_24px_48px_rgba(0,0,0,0.25)]' : ''
+        className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-5xl z-50 transition-all duration-500 rounded-full border border-glass-stroke backdrop-blur-xl ${
+          scrolled
+            ? 'top-4 shadow-[0_12px_40px_rgba(0,0,0,0.15)] py-2.5 bg-surface/85'
+            : 'top-6 shadow-sm py-4 bg-surface/70'
         }`}
       >
-        <div className="flex justify-between items-center px-6 md:px-10 py-4 max-w-7xl mx-auto">
+        <div className="flex justify-between items-center px-4 md:px-6 w-full">
           {/* Logo */}
-          <motion.div
+          <motion.button
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-xl font-extrabold tracking-tighter text-on-surface font-headline cursor-pointer"
+            className="text-xl font-extrabold tracking-tighter text-on-surface font-headline cursor-pointer bg-transparent border-none p-0 outline-none focus:text-primary transition-colors"
             onClick={() => handleNavClick('#home')}
+            aria-label="Bhupinder Singh Portfolio Home"
           >
             B.{' '}
             <span className="text-primary">Singh</span>
-          </motion.div>
+          </motion.button>
 
           {/* Desktop Nav */}
           <motion.div
@@ -117,6 +120,7 @@ export default function Navbar() {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
               className="md:hidden w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-all"
             >
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}

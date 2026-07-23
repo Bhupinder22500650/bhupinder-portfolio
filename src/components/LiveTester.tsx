@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, CheckCircle2, Circle, X } from 'lucide-react';
 
@@ -23,11 +23,15 @@ export default function LiveTester({ isOpen, onClose }: LiveTesterProps) {
   const [completedTests, setCompletedTests] = useState<string[]>([]);
   const [currentTest, setCurrentTest] = useState<string | null>(null);
 
+  const isOpenRef = useRef(isOpen);
+  isOpenRef.current = isOpen;
+
   const runTests = async () => {
     setRunning(true);
     setCompletedTests([]);
 
     for (const test of TEST_SUITE) {
+      if (!isOpenRef.current) break;
       setCurrentTest(test.id);
       
       // Auto-scroll the page a little bit to simulate the runner moving
@@ -35,16 +39,21 @@ export default function LiveTester({ isOpen, onClose }: LiveTesterProps) {
       
       await new Promise(resolve => setTimeout(resolve, test.duration));
       
+      if (!isOpenRef.current) break;
       setCompletedTests(prev => [...prev, test.id]);
     }
     
-    setCurrentTest(null);
-    setRunning(false);
-    
-    // Scroll back up
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 1000);
+    if (isOpenRef.current) {
+      setCurrentTest(null);
+      setRunning(false);
+      
+      // Scroll back up
+      setTimeout(() => {
+        if (isOpenRef.current) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 1000);
+    }
   };
 
   useEffect(() => {
@@ -96,9 +105,8 @@ export default function LiveTester({ isOpen, onClose }: LiveTesterProps) {
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                      >
-                        <Circle size={16} className="text-blue-400 border-t-transparent border-blue-400 border-2 rounded-full" />
-                      </motion.div>
+                        className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full"
+                      />
                     ) : (
                       <Circle size={16} className="text-outline-variant" />
                     )}

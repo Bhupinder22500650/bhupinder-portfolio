@@ -3,12 +3,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { Terminal as TerminalIcon, X, Maximize2, Minimize2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { PERSONAL_INFO, SKILLS } from '@/lib/constants';
+
+const skillsString = SKILLS.map(group => `${group.category}: ${group.items.join(', ')}`).join(' | ');
 
 const COMMANDS: Record<string, string | (() => string | React.ReactNode)> = {
   help: 'Available commands: help, whoami, skills, contact, clear, date, echo [text]',
-  whoami: 'Bhupinder Singh - Junior Software Tester | IT Support | Full-Stack IT Student',
-  contact: 'Email: bhupinder@example.com | LinkedIn: /in/bhupinder-singh',
-  skills: 'Testing: Jest, Cypress, Postman | Frontend: React, Next.js, Tailwind | Backend: Node.js, Express | IT Support: Networking, Hardware troubleshooting',
+  whoami: `${PERSONAL_INFO.name} - ${PERSONAL_INFO.title}`,
+  contact: `Email: ${PERSONAL_INFO.email} | LinkedIn: ${PERSONAL_INFO.linkedin}`,
+  skills: skillsString,
   date: () => new Date().toString(),
   sudo: 'Nice try! This incident will be reported.',
 };
@@ -26,8 +29,8 @@ export default function TerminalMode() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMounted(true);
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
