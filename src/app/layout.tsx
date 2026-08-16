@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Manrope, Libre_Caslon_Text, JetBrains_Mono, Outfit, Reenie_Beanie } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import { PERSONAL_INFO } from '@/lib/constants';
 import ThemeCustomizer from '@/components/ThemeCustomizer';
@@ -111,6 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TerminalMode />
         <Chatbot />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
