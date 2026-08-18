@@ -8,10 +8,12 @@ import { PERSONAL_INFO, SKILLS } from '@/lib/constants';
 const skillsString = SKILLS.map(group => `${group.category}: ${group.items.join(', ')}`).join(' | ');
 
 const COMMANDS: Record<string, string | (() => string | React.ReactNode)> = {
-  help: 'Available commands: help, whoami, skills, contact, clear, date, echo [text]',
+  help: 'Available commands: help, whoami, about, skills, projects, contact, date, clear, echo [text]',
   whoami: `${PERSONAL_INFO.name} - ${PERSONAL_INFO.title}`,
-  contact: `Email: ${PERSONAL_INFO.email} | LinkedIn: ${PERSONAL_INFO.linkedin}`,
+  about: PERSONAL_INFO.tagline,
+  contact: `Email: ${PERSONAL_INFO.email} | LinkedIn: ${PERSONAL_INFO.linkedin} | GitHub: ${PERSONAL_INFO.github}`,
   skills: skillsString,
+  projects: 'Featured Projects: My-Pay-tracker (React Native/Expo), car-dealership-project-website (PHP/MySQL), Lost-and-Found-Campus (TypeScript/React)',
   date: () => new Date().toString(),
   sudo: 'Nice try! This incident will be reported.',
 };

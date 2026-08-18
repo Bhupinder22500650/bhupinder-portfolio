@@ -111,11 +111,19 @@ export default function About() {
                 </FadeUp>
               ))}
 
-              {/* Future placeholder */}
+              {/* Target Roles */}
               <FadeUp delay={0.35}>
-                <div className="relative">
-                  <div className="absolute -left-[37px] top-1 w-4 h-4 rounded-full border-2 border-dashed border-outline-variant opacity-40" />
-                  <p className="text-on-surface-variant text-sm italic opacity-50">Practical Testing Skills</p>
+                <div className="relative group">
+                  <div className="absolute -left-[37px] top-1 w-4 h-4 rounded-full border-2 border-dashed border-primary/60 bg-surface-dim group-hover:scale-110 transition-transform" />
+                  <h4 className="text-base font-bold text-on-surface mb-1">
+                    Open to Junior QA, IT Support &amp; Developer Roles
+                  </h4>
+                  <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">
+                    Wellington, NZ &amp; Remote
+                  </p>
+                  <p className="text-on-surface-variant text-sm leading-relaxed">
+                    Eager to bring hands-on testing, IT support, and full-stack software development skills to a collaborative team environment.
+                  </p>
                 </div>
               </FadeUp>
             </div>
