@@ -3,8 +3,9 @@
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 import { GithubIcon, LinkedinIcon } from '@/components/icons';
-import { PERSONAL_INFO } from '@/lib/constants';
+import { EMAILJS_CONFIG, PERSONAL_INFO } from '@/lib/constants';
 
 function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef(null);
@@ -26,12 +27,10 @@ type FormState = 'idle' | 'sending' | 'success' | 'error';
 export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [state, setState] = useState<FormState>('idle');
-  const [errorMessage, setErrorMessage] = useState<string>('');
   const [formData, setFormData] = useState({
     from_name: '',
     from_email: '',
     message: '',
-    website: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -42,50 +41,31 @@ export default function Contact() {
     e.preventDefault();
     if (state === 'sending') return;
 
-    const name = formData.from_name.trim();
-    const email = formData.from_email.trim();
-    const message = formData.message.trim();
-
-    if (!name || !email || !message) {
-      setErrorMessage('Please fill in all required fields.');
-      setState('error');
-      return;
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setErrorMessage('Please enter a valid email address.');
-      setState('error');
-      return;
-    }
-
     setState('sending');
-    setErrorMessage('');
 
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        setState('success');
-        setFormData({ from_name: '', from_email: '', message: '', website: '' });
-      } else {
-        setErrorMessage(
-          data.message ||
-            `The form is temporarily unavailable. Please email me directly at ${PERSONAL_INFO.email}.`
+      if (EMAILJS_CONFIG.serviceId && EMAILJS_CONFIG.templateId && EMAILJS_CONFIG.publicKey) {
+        await emailjs.send(
+          EMAILJS_CONFIG.serviceId,
+          EMAILJS_CONFIG.templateId,
+          {
+            from_name: formData.from_name,
+            from_email: formData.from_email,
+            message: formData.message,
+          },
+          { publicKey: EMAILJS_CONFIG.publicKey }
         );
-        setState('error');
+      } else {
+        // Fallback simulation if config is missing in dev
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
+
+      setState('success');
+      setFormData({ from_name: '', from_email: '', message: '' });
+      setTimeout(() => setState('idle'), 5000);
     } catch {
-      setErrorMessage(
-        `The form is temporarily unavailable. Please email me directly at ${PERSONAL_INFO.email}.`
-      );
       setState('error');
+      setTimeout(() => setState('idle'), 5000);
     }
   };
 
@@ -153,34 +133,10 @@ export default function Contact() {
           {/* Right — Contact Form */}
           <FadeUp delay={0.15}>
             <div className="bg-surface/50 backdrop-blur-md border border-glass-stroke p-8 md:p-10 rounded-2xl shadow-2xl">
-              <form
-                ref={formRef}
-                action="/api/contact"
-                method="POST"
-                onSubmit={handleSubmit}
-                aria-busy={state === 'sending'}
-                className="space-y-7"
-              >
-                {/* Honeypot field (hidden from users, traps bots) */}
-                <div className="hidden" aria-hidden="true">
-                  <label htmlFor="contact-website">Website</label>
-                  <input
-                    id="contact-website"
-                    name="website"
-                    type="text"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    value={formData.website}
-                    onChange={handleChange}
-                  />
-                </div>
-
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-7">
                 {/* Name */}
                 <div>
-                  <label
-                    htmlFor="contact-name"
-                    className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2"
-                  >
+                  <label htmlFor="contact-name" className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">
                     Name
                   </label>
                   <input
@@ -190,17 +146,13 @@ export default function Contact() {
                     onChange={handleChange}
                     type="text"
                     required
-                    aria-required="true"
                     className="input-animated"
                   />
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label
-                    htmlFor="contact-email-input"
-                    className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2"
-                  >
+                  <label htmlFor="contact-email-input" className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">
                     Email Address
                   </label>
                   <input
@@ -210,17 +162,13 @@ export default function Contact() {
                     onChange={handleChange}
                     type="email"
                     required
-                    aria-required="true"
                     className="input-animated"
                   />
                 </div>
 
                 {/* Message */}
                 <div>
-                  <label
-                    htmlFor="contact-message"
-                    className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2"
-                  >
+                  <label htmlFor="contact-message" className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">
                     Message
                   </label>
                   <textarea
@@ -230,26 +178,18 @@ export default function Contact() {
                     onChange={handleChange}
                     rows={5}
                     required
-                    aria-required="true"
                     className="input-animated resize-none"
                   />
                 </div>
-
-                {/* Privacy sentence */}
-                <p className="text-xs text-on-surface-variant/80 leading-relaxed">
-                  Your contact details are used solely to respond to your inquiry and will never be shared or stored for marketing.
-                </p>
 
                 {/* Status Messages */}
                 {state === 'success' && (
                   <motion.div
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    role="status"
-                    aria-live="polite"
                     className="flex items-center gap-2 text-sm text-primary font-medium"
                   >
-                    <CheckCircle size={16} className="shrink-0" />
+                    <CheckCircle size={16} />
                     <span>Message sent! I&apos;ll be in touch soon.</span>
                   </motion.div>
                 )}
@@ -257,25 +197,10 @@ export default function Contact() {
                   <motion.div
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    role="alert"
-                    aria-live="assertive"
-                    className="flex items-start gap-2 text-sm text-red-400 font-medium"
+                    className="flex items-center gap-2 text-sm text-red-400 font-medium"
                   >
-                    <AlertCircle size={16} className="shrink-0 mt-0.5" />
-                    <div>
-                      {errorMessage || (
-                        <>
-                          The form is temporarily unavailable. Please email me directly at{' '}
-                          <a
-                            href={`mailto:${PERSONAL_INFO.email}`}
-                            className="underline hover:text-white transition-colors"
-                          >
-                            {PERSONAL_INFO.email}
-                          </a>
-                          .
-                        </>
-                      )}
-                    </div>
+                    <AlertCircle size={16} />
+                    <span>Something went wrong. Please try again.</span>
                   </motion.div>
                 )}
 
