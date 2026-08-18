@@ -55,15 +55,16 @@ export default function Contact() {
           },
           { publicKey: EMAILJS_CONFIG.publicKey }
         );
+        setState('success');
+        setFormData({ from_name: '', from_email: '', message: '' });
+        setTimeout(() => setState('idle'), 5000);
       } else {
-        // Fallback simulation if config is missing in dev
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        console.warn('EmailJS credentials are missing. Please add them to .env.local');
+        setState('error');
+        setTimeout(() => setState('idle'), 5000);
       }
-
-      setState('success');
-      setFormData({ from_name: '', from_email: '', message: '' });
-      setTimeout(() => setState('idle'), 5000);
-    } catch {
+    } catch (err) {
+      console.error('EmailJS send error:', err);
       setState('error');
       setTimeout(() => setState('idle'), 5000);
     }
