@@ -4,7 +4,6 @@ import About from '@/components/About';
 import Projects from '@/components/Projects';
 import Certificates from '@/components/Certificates';
 import Contact from '@/components/Contact';
-import GitHubActivity from '@/components/GitHubActivity';
 import Footer from '@/components/Footer';
 
 export default function HomePage() {
@@ -14,7 +13,6 @@ export default function HomePage() {
       <main>
         <Hero />
         <About />
-        <GitHubActivity />
         <Projects />
         <Certificates />
         <Contact />

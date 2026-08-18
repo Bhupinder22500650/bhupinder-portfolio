@@ -90,7 +90,7 @@ export default function TerminalMode() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-20 left-6 z-40 w-12 h-12 rounded-full bg-surface-container-high border border-glass-stroke text-on-surface flex items-center justify-center shadow-lg hover:scale-110 hover:text-primary transition-all active:scale-95"
+        className="fixed bottom-6 left-20 z-40 w-12 h-12 rounded-full bg-surface-container-high border border-glass-stroke text-on-surface flex items-center justify-center shadow-lg hover:scale-110 hover:text-primary transition-all active:scale-95"
         title="Open Terminal (Ctrl+K)"
       >
         <TerminalIcon size={20} />

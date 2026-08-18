@@ -5,12 +5,8 @@ import { ArrowDown, Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons';
 import { AVAILABLE_FOR_WORK, PERSONAL_INFO } from '@/lib/constants';
 import Image from 'next/image';
-import LiveTester from '@/components/LiveTester';
-import { useState } from 'react';
 
 export default function Hero() {
-  const [isTesterOpen, setIsTesterOpen] = useState(false);
-
   const scrollToProjects = () => {
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -93,13 +89,6 @@ export default function Hero() {
             >
               Contact Me
             </button>
-            <button
-              onClick={() => setIsTesterOpen(true)}
-              className="border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 px-6 py-4 rounded-full font-bold text-sm hover:bg-emerald-500/20 transition-colors active:scale-95 flex items-center gap-2"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              Run QA Tests
-            </button>
           </motion.div>
 
           {/* Social Links */}
@@ -180,8 +169,6 @@ export default function Hero() {
           <ArrowDown size={16} />
         </motion.div>
       </motion.button>
-
-      <LiveTester isOpen={isTesterOpen} onClose={() => setIsTesterOpen(false)} />
     </section>
   );
 }

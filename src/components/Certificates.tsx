@@ -27,6 +27,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   Data: '#9685B5', // Muted Violet
   DevOps: '#7C9573', // Sage
   'IT Support': '#C98686', // Dusty Rose
+  'AI & Automation': '#75D5E2', // Cyber Teal
 };
 
 export default function Certificates() {
