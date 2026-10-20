@@ -1,23 +1,5 @@
-'use client';
-
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { ABOUT_TEXT, SKILLS, EDUCATION } from '@/lib/constants';
-
-function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+import FadeUp from '@/components/ui/FadeUp';
+import { ABOUT_TEXT, SKILLS, EDUCATION } from '@/data/experience';
 
 export default function About() {
   return (
@@ -27,7 +9,7 @@ export default function About() {
 
           {/* Left — Bio + Skills */}
           <div>
-            <FadeUp>
+            <FadeUp margin="-80px">
               <span className="text-xs font-bold uppercase tracking-widest text-primary mb-3 block">
                 Who I Am
               </span>
@@ -37,7 +19,7 @@ export default function About() {
               </h2>
             </FadeUp>
 
-            <FadeUp delay={0.1}>
+            <FadeUp margin="-80px" delay={0.1}>
               <div className="space-y-5 text-on-surface-variant leading-relaxed text-base md:text-lg">
                 {ABOUT_TEXT.map((para, i) => (
                   <p key={i}>{para}</p>
@@ -46,7 +28,7 @@ export default function About() {
             </FadeUp>
 
             {/* Skills Chips */}
-            <FadeUp delay={0.2}>
+            <FadeUp margin="-80px" delay={0.2}>
               <div className="mt-12 space-y-6">
                 {SKILLS.map((skillGroup) => (
                   <div key={skillGroup.category}>
@@ -71,7 +53,7 @@ export default function About() {
 
           {/* Right — Timeline */}
           <div>
-            <FadeUp delay={0.05}>
+            <FadeUp margin="-80px" delay={0.05}>
               <h3 className="text-2xl font-bold text-on-surface mb-10 tracking-tight">
                 Experience &amp; Education
               </h3>
@@ -82,11 +64,11 @@ export default function About() {
               <div
                 aria-hidden="true"
                 className="absolute top-0 bottom-0 left-0 w-px"
-                style={{ background: 'linear-gradient(to bottom, var(--color-primary), transparent)', opacity: 0.3 }}
+                style={{ background: 'linear-gradient(to bottom, var(--palette-primary), transparent)', opacity: 0.3 }}
               />
 
               {EDUCATION.map((item, i) => (
-                <FadeUp key={item.title} delay={0.1 + i * 0.12}>
+                <FadeUp margin="-80px" key={item.title} delay={0.1 + i * 0.12}>
                   <div className="relative group">
                     {/* Timeline dot */}
                     <div
@@ -112,7 +94,7 @@ export default function About() {
               ))}
 
               {/* Target Roles */}
-              <FadeUp delay={0.35}>
+              <FadeUp margin="-80px" delay={0.35}>
                 <div className="relative group">
                   <div className="absolute -left-[37px] top-1 w-4 h-4 rounded-full border-2 border-dashed border-primary/60 bg-surface-dim group-hover:scale-110 transition-transform" />
                   <h4 className="text-base font-bold text-on-surface mb-1">

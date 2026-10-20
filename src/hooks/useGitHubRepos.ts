@@ -1,98 +1,55 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { FEATURED_REPOSITORY_NAMES, GITHUB_USERNAME, STATIC_PROJECTS } from '@/lib/constants';
-
-export interface GitHubRepo {
-  id: number;
-  name: string;
-  description: string | null;
-  language: string | null;
-  html_url: string;
-  homepage: string | null;
-  topics: string[];
-  updated_at: string;
-  stargazers_count: number;
-  default_branch?: string;
-  problem?: string;
-  solution?: string;
-  techStack?: string[];
-  role?: string;
-  features?: string[];
-  testing?: string[];
-  images?: string[];
-  isMobileApp?: boolean;
-}
-
-const CACHE_KEY = 'gh_featured_repos_cache_v2';
-const CACHE_TTL = 1000 * 60 * 30; // 30 minutes
-
-const staticProjectByName = new Map(STATIC_PROJECTS.map((project) => [project.name, project]));
-
-function orderFeaturedRepos(repos: GitHubRepo[]) {
-  return FEATURED_REPOSITORY_NAMES.map((name) => repos.find((repo) => repo.name === name))
-    .filter((repo): repo is GitHubRepo => Boolean(repo))
-    .map((repo) => {
-      const fallback = staticProjectByName.get(repo.name);
-
-      return {
-        ...repo,
-        description: repo.description || fallback?.description || null,
-        homepage: repo.homepage || fallback?.homepage || null,
-        topics: repo.topics?.length ? repo.topics : fallback?.topics || [],
-        problem: fallback?.problem,
-        solution: fallback?.solution,
-        techStack: fallback?.techStack,
-        role: fallback?.role,
-        features: fallback?.features,
-        testing: fallback?.testing,
-        images: fallback?.images,
-        isMobileApp: fallback?.isMobileApp,
-      };
-    });
-}
+import { GITHUB_USERNAME } from '@/data/site';
+import { STATIC_PROJECTS } from '@/data/projects';
+import { isGitHubRepo, mergeFeaturedRepos, readCachedRepos, REPOS_CACHE_KEY } from '@/lib/projects';
+import { readStorage, writeStorage } from '@/lib/storage';
+import type { Project } from '@/types/project';
 
 export function useGitHubRepos() {
-  const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  const [repos, setRepos] = useState<Project[]>(STATIC_PROJECTS);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const fetchRepos = async () => {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 8000);
+    let active = true;
+
+    async function fetchRepos() {
       try {
-        // Check cache first
-        const cached = localStorage.getItem(CACHE_KEY);
+        const cached = readCachedRepos(readStorage(REPOS_CACHE_KEY));
         if (cached) {
-          const { data, timestamp } = JSON.parse(cached);
-          if (Date.now() - timestamp < CACHE_TTL) {
-            setRepos(data);
-            setLoading(false);
-            return;
-          }
+          setRepos(mergeFeaturedRepos(cached));
+          return;
         }
-
-        const res = await fetch(
-          `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`,
-          { headers: { Accept: 'application/vnd.github+json' } }
-        );
-
-        if (!res.ok) throw new Error('GitHub API error');
-
-        const data: GitHubRepo[] = await res.json();
-        const filtered = orderFeaturedRepos(data);
-        const finalRepos = filtered.length > 0 ? filtered : STATIC_PROJECTS;
-
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ data: finalRepos, timestamp: Date.now() }));
-        setRepos(finalRepos);
+        const res = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`, {
+          headers: { Accept: 'application/vnd.github+json' },
+          signal: controller.signal,
+        });
+        if (!res.ok) throw new Error('GitHub API unavailable');
+        const data: unknown = await res.json();
+        if (!Array.isArray(data) || !data.every(isGitHubRepo)) throw new Error('Invalid GitHub response');
+        const featured = mergeFeaturedRepos(data);
+        if (active) {
+          setRepos(featured);
+          writeStorage(REPOS_CACHE_KEY, JSON.stringify({ data: featured, timestamp: Date.now() }));
+        }
       } catch {
-        setError(true);
-        setRepos(STATIC_PROJECTS);
+        if (active) setError(true);
       } finally {
-        setLoading(false);
+        window.clearTimeout(timeout);
+        if (active) setLoading(false);
       }
-    };
+    }
 
-    fetchRepos();
+    void fetchRepos();
+    return () => {
+      active = false;
+      window.clearTimeout(timeout);
+      controller.abort();
+    };
   }, []);
 
   return { repos, loading, error };

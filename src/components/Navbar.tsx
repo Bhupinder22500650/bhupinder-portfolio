@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Moon, Sun, Menu, X, Download } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
 import { useActiveSection } from '@/hooks/useActiveSection';
-import { PERSONAL_INFO } from '@/lib/constants';
+import { PERSONAL_INFO } from '@/data/site';
 
 const NAV_LINKS = [
   { href: '#home', label: 'Home', id: 'home' },
@@ -23,9 +23,19 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobileOpen(false);
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [mobileOpen]);
 
   const handleNavClick = (href: string) => {
     setMobileOpen(false);
@@ -102,6 +112,7 @@ export default function Navbar() {
             <button
               onClick={toggle}
               aria-label="Toggle theme"
+              aria-pressed={theme === 'dark'}
               className={`relative flex items-center w-14 h-8 rounded-full p-1 transition-colors duration-300 ${
                 theme === 'dark' ? 'bg-primary' : 'bg-surface-container-highest'
               } ${theme === 'dark' ? 'justify-end' : 'justify-start'}`}
@@ -134,6 +145,7 @@ export default function Navbar() {
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
               aria-expanded={mobileOpen}
+              aria-controls="mobile-navigation"
               className="md:hidden w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-primary transition-all"
             >
               {mobileOpen ? <X size={18} /> : <Menu size={18} />}
@@ -145,6 +157,7 @@ export default function Navbar() {
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
+              id="mobile-navigation"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}

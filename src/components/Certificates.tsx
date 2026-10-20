@@ -1,25 +1,6 @@
-'use client';
-
-import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import FadeUp from '@/components/ui/FadeUp';
 import { Award, ExternalLink } from 'lucide-react';
-import { CERTIFICATES } from '@/lib/constants';
-
-function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="h-full"
-    >
-      {children}
-    </motion.div>
-  );
-}
+import { CERTIFICATES } from '@/data/certificates';
 
 const CATEGORY_COLORS: Record<string, string> = {
   Development: '#768D9C', // Slate Blue
@@ -55,7 +36,7 @@ export default function Certificates() {
           {CERTIFICATES.map((cert, i) => {
             const accentColor = CATEGORY_COLORS[cert.category] || '#C28459';
             return (
-              <FadeUp key={cert.id} delay={i * 0.08}>
+              <FadeUp key={cert.id} delay={i * 0.08} className="h-full">
                 <a
                   href={cert.filePath}
                   target="_blank"

@@ -1,32 +1,18 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import FadeUp from '@/components/ui/FadeUp';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Send, CheckCircle, AlertCircle } from 'lucide-react';
-import emailjs from '@emailjs/browser';
 import { GithubIcon, LinkedinIcon } from '@/components/icons';
-import { EMAILJS_CONFIG, PERSONAL_INFO } from '@/lib/constants';
-
-function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+import { normalizeContactMessage, sendContactMessage } from '@/lib/email';
+import { PERSONAL_INFO } from '@/data/site';
 
 type FormState = 'idle' | 'sending' | 'success' | 'error';
 
 export default function Contact() {
-  const formRef = useRef<HTMLFormElement>(null);
   const [state, setState] = useState<FormState>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     from_name: '',
     from_email: '',
@@ -35,38 +21,28 @@ export default function Contact() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    if (state !== 'sending') setState('idle');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (state === 'sending') return;
 
-    setState('sending');
-
     try {
-      if (EMAILJS_CONFIG.serviceId && EMAILJS_CONFIG.templateId && EMAILJS_CONFIG.publicKey) {
-        await emailjs.send(
-          EMAILJS_CONFIG.serviceId,
-          EMAILJS_CONFIG.templateId,
-          {
-            from_name: formData.from_name,
-            from_email: formData.from_email,
-            message: formData.message,
-          },
-          { publicKey: EMAILJS_CONFIG.publicKey }
-        );
-        setState('success');
-        setFormData({ from_name: '', from_email: '', message: '' });
-        setTimeout(() => setState('idle'), 5000);
-      } else {
-        console.warn('EmailJS credentials are missing. Please add them to .env.local');
-        setState('error');
-        setTimeout(() => setState('idle'), 5000);
-      }
-    } catch (err) {
-      console.error('EmailJS send error:', err);
+      normalizeContactMessage(formData);
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Please check your message.');
       setState('error');
-      setTimeout(() => setState('idle'), 5000);
+      return;
+    }
+    setState('sending');
+    try {
+      await sendContactMessage(formData);
+      setState('success');
+      setFormData({ from_name: '', from_email: '', message: '' });
+    } catch {
+      setErrorMessage(`Unable to send right now. Please try again or email ${PERSONAL_INFO.email} directly.`);
+      setState('error');
     }
   };
 
@@ -134,7 +110,7 @@ export default function Contact() {
           {/* Right — Contact Form */}
           <FadeUp delay={0.15}>
             <div className="bg-surface/50 backdrop-blur-md border border-glass-stroke p-8 md:p-10 rounded-2xl shadow-2xl">
-              <form ref={formRef} onSubmit={handleSubmit} className="space-y-7">
+              <form onSubmit={handleSubmit} aria-busy={state === 'sending'} className="space-y-7">
                 {/* Name */}
                 <div>
                   <label htmlFor="contact-name" className="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">
@@ -146,6 +122,9 @@ export default function Contact() {
                     value={formData.from_name}
                     onChange={handleChange}
                     type="text"
+                    autoComplete="name"
+                    maxLength={100}
+                    disabled={state === 'sending'}
                     required
                     className="input-animated"
                   />
@@ -162,6 +141,9 @@ export default function Contact() {
                     value={formData.from_email}
                     onChange={handleChange}
                     type="email"
+                    autoComplete="email"
+                    maxLength={254}
+                    disabled={state === 'sending'}
                     required
                     className="input-animated"
                   />
@@ -178,6 +160,8 @@ export default function Contact() {
                     value={formData.message}
                     onChange={handleChange}
                     rows={5}
+                    maxLength={5000}
+                    disabled={state === 'sending'}
                     required
                     className="input-animated resize-none"
                   />
@@ -186,6 +170,7 @@ export default function Contact() {
                 {/* Status Messages */}
                 {state === 'success' && (
                   <motion.div
+                    role="status"
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="flex items-center gap-2 text-sm text-primary font-medium"
@@ -196,12 +181,13 @@ export default function Contact() {
                 )}
                 {state === 'error' && (
                   <motion.div
+                    role="alert"
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="flex items-center gap-2 text-sm text-red-400 font-medium"
                   >
                     <AlertCircle size={16} />
-                    <span>Something went wrong. Please try again.</span>
+                    <span>{errorMessage}</span>
                   </motion.div>
                 )}
 

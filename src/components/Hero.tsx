@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowDown, Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons';
-import { AVAILABLE_FOR_WORK, PERSONAL_INFO } from '@/lib/constants';
+import { AVAILABLE_FOR_WORK, PERSONAL_INFO } from '@/data/site';
 import Image from 'next/image';
 
 export default function Hero() {
@@ -32,7 +32,7 @@ export default function Hero() {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-outline-variant/50 mb-8"
             >
-              <span className="w-2 h-2 rounded-full bg-[var(--color-cyber-lime)]" />
+              <span className="w-2 h-2 rounded-full bg-[var(--palette-cyber-lime)]" />
               <span className="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">
                 Available for work
               </span>

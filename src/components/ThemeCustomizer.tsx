@@ -1,39 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useAccentTheme } from '@/hooks/useAccentTheme';
+import { ACCENT_THEMES } from '@/lib/theme';
 import { Palette, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const THEMES = [
-  { id: 'clay', name: 'Clay', color: '#C28459' },
-  { id: 'slate', name: 'Slate', color: '#768D9C' },
-  { id: 'sage', name: 'Sage', color: '#7C9573' },
-  { id: 'rose', name: 'Rose', color: '#C98686' },
-  { id: 'ochre', name: 'Ochre', color: '#C59E5E' },
-];
-
 export default function ThemeCustomizer() {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTheme, setActiveTheme] = useState('clay');
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const saved = localStorage.getItem('primary-theme') || 'clay';
-    document.documentElement.setAttribute('data-primary', saved);
-    const timer = setTimeout(() => {
-      setMounted(true);
-      setActiveTheme(saved);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const changeTheme = (themeId: string) => {
-    setActiveTheme(themeId);
-    document.documentElement.setAttribute('data-primary', themeId);
-    localStorage.setItem('primary-theme', themeId);
-  };
-
-  if (!mounted) return null;
+  const { activeTheme, changeTheme } = useAccentTheme();
 
   return (
     <div className="fixed bottom-6 left-6 z-50 flex items-end">
@@ -48,6 +23,7 @@ export default function ThemeCustomizer() {
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm font-bold text-on-surface">Accent Color</span>
               <button
+                aria-label="Close theme customizer"
                 onClick={() => setIsOpen(false)}
                 className="text-on-surface-variant hover:text-primary transition-colors"
               >
@@ -55,11 +31,13 @@ export default function ThemeCustomizer() {
               </button>
             </div>
             <div className="grid grid-cols-5 gap-2">
-              {THEMES.map((theme) => (
+              {ACCENT_THEMES.map((theme) => (
                 <button
                   key={theme.id}
                   onClick={() => changeTheme(theme.id)}
                   title={theme.name}
+                  aria-label={`${theme.name} accent`}
+                  aria-pressed={activeTheme === theme.id}
                   className={`w-6 h-6 rounded-full border-2 transition-transform hover:scale-110 flex items-center justify-center ${
                     activeTheme === theme.id ? 'border-on-surface scale-110' : 'border-transparent'
                   }`}
@@ -75,6 +53,8 @@ export default function ThemeCustomizer() {
         onClick={() => setIsOpen(!isOpen)}
         className="w-12 h-12 rounded-full bg-surface-container-high border border-glass-stroke text-on-surface flex items-center justify-center shadow-lg hover:scale-110 hover:text-primary transition-all active:scale-95"
         title="Customize Theme"
+        aria-label="Customize theme"
+        aria-expanded={isOpen}
       >
         <Palette size={20} />
       </button>

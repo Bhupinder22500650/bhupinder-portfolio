@@ -1,8 +1,6 @@
-'use client';
-
 import { Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '@/components/icons';
-import { PERSONAL_INFO } from '@/lib/constants';
+import { PERSONAL_INFO } from '@/data/site';
 
 export default function Footer() {
   const year = new Date().getFullYear();

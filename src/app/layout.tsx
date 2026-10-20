@@ -3,7 +3,8 @@ import { Manrope, Libre_Caslon_Text, JetBrains_Mono, Outfit, Reenie_Beanie } fro
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
-import { PERSONAL_INFO } from '@/lib/constants';
+import { THEME_INIT_SCRIPT } from '@/lib/theme';
+import { PERSONAL_INFO } from '@/data/site';
 import ThemeCustomizer from '@/components/ThemeCustomizer';
 import TerminalMode from '@/components/TerminalMode';
 import Chatbot from '@/components/Chatbot';
@@ -29,14 +30,14 @@ const jetbrainsMono = JetBrains_Mono({
 
 const outfit = Outfit({
   subsets: ['latin'],
-  variable: '--font-outfit',
+  variable: '--font-outfit-source',
   display: 'swap',
 });
 
 const reenieBeanie = Reenie_Beanie({
   weight: ['400'],
   subsets: ['latin'],
-  variable: '--font-reenie-beanie',
+  variable: '--font-reenie-beanie-source',
   display: 'swap',
 });
 
@@ -88,21 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/favicon.ico" />
         <script
           dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var stored = localStorage.getItem('theme');
-                  var preferred = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
-                  document.documentElement.setAttribute('data-theme', preferred);
-                  
-                  var primary = localStorage.getItem('primary-theme') || 'clay';
-                  document.documentElement.setAttribute('data-primary', primary);
-                } catch(e) {
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                  document.documentElement.setAttribute('data-primary', 'clay');
-                }
-              })();
-            `,
+            __html: THEME_INIT_SCRIPT,
           }}
         />
       </head>

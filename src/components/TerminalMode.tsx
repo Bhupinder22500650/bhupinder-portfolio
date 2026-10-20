@@ -3,26 +3,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { Terminal as TerminalIcon, X, Maximize2, Minimize2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PERSONAL_INFO, SKILLS } from '@/lib/constants';
-
-const skillsString = SKILLS.map(group => `${group.category}: ${group.items.join(', ')}`).join(' | ');
-
-const COMMANDS: Record<string, string | (() => string | React.ReactNode)> = {
-  help: 'Available commands: help, whoami, about, skills, projects, contact, date, clear, echo [text]',
-  whoami: `${PERSONAL_INFO.name} - ${PERSONAL_INFO.title}`,
-  about: PERSONAL_INFO.tagline,
-  contact: `Email: ${PERSONAL_INFO.email} | LinkedIn: ${PERSONAL_INFO.linkedin} | GitHub: ${PERSONAL_INFO.github}`,
-  skills: skillsString,
-  projects: 'Featured Projects: My-Pay-tracker (React Native/Expo), car-dealership-project-website (PHP/MySQL), Lost-and-Found-Campus (TypeScript/React)',
-  date: () => new Date().toString(),
-  sudo: 'Nice try! This incident will be reported.',
-};
+import { executeCommand } from '@/lib/terminal';
 
 export default function TerminalMode() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMaximized, setIsMaximized] = useState(false);
   const [input, setInput] = useState('');
-  const [history, setHistory] = useState<{ type: 'input' | 'output'; text: string | React.ReactNode }[]>([
+  const [history, setHistory] = useState<{ type: 'input' | 'output'; text: string }[]>([
     { type: 'output', text: 'Welcome to B.Singh Terminal [Version 1.0.0]' },
     { type: 'output', text: 'Type "help" to see available commands.' },
   ]);
@@ -51,8 +38,9 @@ export default function TerminalMode() {
 
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 100);
+      const timer = setTimeout(() => inputRef.current?.focus(), 100);
       endRef.current?.scrollIntoView({ behavior: 'smooth' });
+      return () => clearTimeout(timer);
     }
   }, [isOpen, history]);
 
@@ -60,29 +48,12 @@ export default function TerminalMode() {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const newHistory = [...history, { type: 'input' as const, text: input }];
-    const args = input.trim().split(' ');
-    const cmd = args[0].toLowerCase();
-
-    if (cmd === 'clear') {
-      setHistory([]);
-      setInput('');
-      return;
-    }
-
-    if (cmd === 'echo') {
-      newHistory.push({ type: 'output', text: args.slice(1).join(' ') });
-    } else if (COMMANDS[cmd]) {
-      const response = COMMANDS[cmd];
-      newHistory.push({
-        type: 'output',
-        text: typeof response === 'function' ? response() : response,
-      });
-    } else {
-      newHistory.push({ type: 'output', text: `Command not found: ${cmd}. Type "help" for a list of commands.` });
-    }
-
-    setHistory(newHistory);
+    const result = executeCommand(input);
+    setHistory(previous => result.clear ? [] : [
+      ...previous,
+      { type: 'input', text: input },
+      { type: 'output', text: result.output },
+    ]);
     setInput('');
   };
 
@@ -94,6 +65,7 @@ export default function TerminalMode() {
         onClick={() => setIsOpen(true)}
         className="fixed bottom-6 left-20 z-40 w-12 h-12 rounded-full bg-surface-container-high border border-glass-stroke text-on-surface flex items-center justify-center shadow-lg hover:scale-110 hover:text-primary transition-all active:scale-95"
         title="Open Terminal (Ctrl+K)"
+        aria-label="Open terminal"
       >
         <TerminalIcon size={20} />
       </button>
@@ -107,15 +79,16 @@ export default function TerminalMode() {
             className={`fixed z-50 overflow-hidden bg-[#0d0d0d] border border-glass-stroke shadow-2xl flex flex-col font-mono text-sm sm:text-base ${
               isMaximized
                 ? 'inset-0 rounded-none'
-                : 'bottom-6 left-6 right-6 sm:left-auto sm:right-6 sm:w-[600px] h-[400px] rounded-xl'
+                : 'bottom-6 left-6 right-6 sm:left-auto sm:right-6 sm:w-[600px] h-[400px] max-h-[calc(100dvh-48px)] rounded-xl'
             }`}
           >
             {/* Terminal Header */}
             <div className="bg-[#1a1a1a] border-b border-glass-stroke px-4 py-2 flex items-center justify-between select-none">
               <div className="flex gap-2">
-                <button onClick={() => setIsOpen(false)} className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400" />
-                <button className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400" />
+                <button aria-label="Close terminal" onClick={() => setIsOpen(false)} className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400" />
+                <button aria-label="Minimize terminal" onClick={() => setIsOpen(false)} className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400" />
                 <button
+                  aria-label={isMaximized ? 'Restore terminal' : 'Maximize terminal'}
                   onClick={() => setIsMaximized(!isMaximized)}
                   className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400 flex items-center justify-center group"
                 >
@@ -127,7 +100,7 @@ export default function TerminalMode() {
                 </button>
               </div>
               <div className="text-xs text-on-surface-variant font-medium">bash - bhupinder@portfolio: ~</div>
-              <button onClick={() => setIsOpen(false)} className="text-on-surface-variant hover:text-white">
+              <button aria-label="Close terminal window" onClick={() => setIsOpen(false)} className="text-on-surface-variant hover:text-white">
                 <X size={14} />
               </button>
             </div>
@@ -157,11 +130,12 @@ export default function TerminalMode() {
                   <span className="text-blue-400">~</span>$
                 </span>
                 <input
+                  aria-label="Terminal command"
                   ref={inputRef}
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  className="flex-1 bg-transparent border-none outline-none text-white ml-2"
+                  className="min-w-0 flex-1 bg-transparent border-none outline-none text-white ml-2"
                   autoFocus
                   autoComplete="off"
                   spellCheck="false"
