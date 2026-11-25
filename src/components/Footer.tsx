@@ -21,7 +21,7 @@ export default function Footer() {
 
           {/* Copyright */}
           <p className="text-xs text-on-surface-variant text-center leading-relaxed">
-            © {year} Bhupinder Singh. Built with Next.js, TypeScript, and care.
+            © {year} Bhupinder Singh. Built with Next.js and care.
           </p>
 
           {/* Social + CV */}

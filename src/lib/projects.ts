@@ -24,11 +24,12 @@ export function mergeFeaturedRepos(repos: GitHubRepo[]): Project[] {
     const repo = byName.get(name);
     if (!repo) return fallback;
     const homepage = repo.homepage?.trim();
+    const safeHomepage = homepage && /^https?:\/\//i.test(homepage) ? homepage : fallback.homepage;
     return {
       ...fallback,
       ...repo,
       description: repo.description || fallback.description,
-      homepage: homepage && /^https?:\/\//i.test(homepage) ? homepage : fallback.homepage,
+      homepage: fallback.showLiveDemo === false ? null : safeHomepage,
       topics: repo.topics.length ? repo.topics : fallback.topics,
       // Case-study content belongs to the portfolio, including on cache reads.
       problem: fallback.problem,
@@ -39,6 +40,7 @@ export function mergeFeaturedRepos(repos: GitHubRepo[]): Project[] {
       testing: fallback.testing,
       images: fallback.images,
       isMobileApp: fallback.isMobileApp,
+      showLiveDemo: fallback.showLiveDemo,
     };
   });
 }

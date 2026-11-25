@@ -42,6 +42,19 @@ test('live metadata merges without replacing case studies or accepting unsafe ho
   assert.equal(result.problem, STATIC_PROJECTS[0].problem);
 });
 
+test('disabled live demos stay hidden when GitHub or cached metadata supplies a homepage', () => {
+  const dealership = STATIC_PROJECTS.find(project => project.name === 'car-dealership-project-website');
+  const incoming = { ...dealership, homepage: 'https://example.com/dealership', showLiveDemo: true };
+  const now = Date.now();
+  const cached = readCachedRepos(JSON.stringify({ timestamp: now, data: [incoming] }), now);
+  assert.ok(cached);
+  for (const repos of [[incoming], cached]) {
+    const result = mergeFeaturedRepos(repos).find(project => project.name === dealership.name);
+    assert.equal(result.homepage, null);
+    assert.equal(result.showLiveDemo, false);
+  }
+});
+
 test('cache rejects corrupt, expired, future, and malformed data', () => {
   const now = 2000000;
   for (const raw of ['broken JSON', 'null', '{}', JSON.stringify({ timestamp: 0, data: [] }), JSON.stringify({ timestamp: now + 1, data: [] }), JSON.stringify({ timestamp: now, data: null }), JSON.stringify({ timestamp: now, data: [{}] })]) {

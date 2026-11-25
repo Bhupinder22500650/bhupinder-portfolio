@@ -39,7 +39,6 @@ export const metadata: Metadata = {
     'Wellington NZ',
     'Next.js',
     'React',
-    'TypeScript',
     'Portfolio',
   ],
   authors: [{ name: 'Bhupinder Singh', url: PERSONAL_INFO.github }],

@@ -12,6 +12,7 @@ export interface GitHubRepo {
 }
 
 export interface Project extends GitHubRepo {
+  showLiveDemo?: boolean;
   problem?: string;
   solution?: string;
   techStack?: string[];

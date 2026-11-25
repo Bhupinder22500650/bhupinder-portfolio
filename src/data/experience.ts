@@ -21,7 +21,6 @@ export const SKILLS = [
   {
     category: 'Working Knowledge',
     items: [
-      'TypeScript',
       'React Native',
       'Expo',
       'Node.js',

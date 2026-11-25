@@ -14,5 +14,5 @@ export const PERSONAL_INFO = {
   profilePhoto: '/profile.jpg',
   ogImage: '/opengraph-image',
   tagline:
-    'Final-year IT student based in Wellington, New Zealand, with hands-on experience in software testing, IT support, and full-stack web/mobile projects. I build practical applications using React, React Native, Node.js, TypeScript, SQL, and Supabase.',
+    'Final-year IT student based in Wellington, New Zealand, with hands-on experience in software testing, IT support, and full-stack web/mobile projects. I build practical applications using React, React Native, Node.js, SQL, and Supabase.',
 };

@@ -1,4 +1,4 @@
-import { ExternalLink, Star, Calendar, FileText } from 'lucide-react';
+import { Star, Calendar, FileText } from 'lucide-react';
 import { GithubIcon } from '@/components/icons';
 import { LANGUAGE_COLORS } from '@/data/projects';
 import { formatRepoName } from '@/lib/projects';
@@ -75,28 +75,6 @@ export default function ProjectCard({ repo, onOpenCaseStudy }: { repo: Project; 
             <GithubIcon size={14} />
             GitHub
           </a>
-          {repo.homepage ? (
-            <a
-              href={repo.homepage}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 flex items-center justify-center gap-2 py-2.5 rounded-full border border-glass-stroke hover:bg-surface-variant text-sm font-bold text-on-surface-variant hover:text-on-surface transition-all active:scale-95"
-              title="Live Demo"
-            >
-              <ExternalLink size={14} />
-              Live Demo
-            </a>
-          ) : repo.isMobileApp ? (
-            <a
-              href={repo.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-4 flex items-center justify-center gap-2 py-2.5 rounded-full border border-glass-stroke hover:bg-surface-variant text-sm font-bold text-on-surface-variant hover:text-on-surface transition-all active:scale-95"
-            >
-              <FileText size={14} />
-              Docs
-            </a>
-          ) : null}
         </div>
       </div>
     </div>
