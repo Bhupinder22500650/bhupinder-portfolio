@@ -13,6 +13,18 @@ npm run dev
 
 Open http://localhost:3000. Local settings are kept in a single `.env.local` file. Preserve it when updating the project. The build downloads Google Fonts, so it requires access to Google's font servers.
 
+## Publishing changes
+
+The production branch is `main`. Vercel builds changes pushed to GitHub `main` and publishes successful builds to https://bhupindersingh.app.
+
+In your IDE, open the portfolio project on `main` and pull the latest changes before editing. Run the checks below, commit the files you changed, then use **Push** or **Sync Changes**, or run:
+
+```sh
+git push origin main
+```
+
+A local commit stays on your computer until you push it. Changes on feature branches reach production when their pull request is merged into `main`.
+
 ## Email setup
 
 Your existing `.env.local` already contains the EmailJS settings. On a fresh checkout, create that file with the following entries and fill in your EmailJS values:
