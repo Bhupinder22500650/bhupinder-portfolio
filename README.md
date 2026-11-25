@@ -69,8 +69,6 @@ Runtime theme values live in `src/app/globals.css` as `--palette-*` variables. T
 
 The social preview is generated at `/opengraph-image` with no external image asset. Update the deployed domain in `src/app/layout.tsx` when changing hosts.
 
-The separate `/softly` concept page is unchanged by this repair. Its original signup demonstration and placeholder links remain; it is not connected to EmailJS.
-
 ## Portfolio assistant
 
 The assistant answers questions from the profile, projects, experience, skills and certificates in `src/data/`. It remembers the selected project during the conversation, so questions such as “What technologies does it use?” or “How was it tested?” refer to that project. Replies include links to relevant sections, source code, certificates, the CV and contact options.
