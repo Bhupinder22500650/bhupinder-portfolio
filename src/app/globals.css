@@ -27,8 +27,6 @@
   --color-glass-stroke: var(--palette-glass-stroke);
   --font-headline: var(--font-libre-caslon), serif;
   --font-mono: var(--font-jetbrains-mono), monospace;
-  --font-outfit: var(--font-outfit-source), sans-serif;
-  --font-reenie-beanie: var(--font-reenie-beanie-source), cursive;
 }
 
 @layer base {
